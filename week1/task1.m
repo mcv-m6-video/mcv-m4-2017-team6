@@ -1,4 +1,4 @@
-function [ output_args ] = task1( input_args )
+function [ ] = task1()
 %TASK1 Segmentation metrics. Understand precision & recall.
 %   Implement and compute the specified measures for sequences A and B
 
