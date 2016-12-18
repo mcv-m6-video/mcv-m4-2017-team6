@@ -37,7 +37,11 @@ function [ ] = task2()
         fn_a = sum(~test_a(gt_mask)); % False Negative
         prec_a = tp_a/(tp_a+fp_a);
         rec_a = tp_a/(tp_a+fn_a);
-        f1_a = (2*prec_a*rec_a)/(prec_a+rec_a);
+        if (prec_a+rec_a > 0)
+            f1_a = (2*prec_a*rec_a)/(prec_a+rec_a);
+        else
+            f1_a = 0;
+        end
         
         % results for test_B
         tp_b = sum(test_b(gt_mask)); % True Positive
@@ -46,7 +50,11 @@ function [ ] = task2()
         fn_b = sum(~test_b(gt_mask)); % False Negative
         prec_b = tp_b/(tp_b+fp_b);
         rec_b = tp_b/(tp_b+fn_b);
-        f1_b = (2*prec_b*rec_b)/(prec_b+rec_b);
+        if (prec_b+rec_b > 0)
+            f1_b = (2*prec_b*rec_b)/(prec_b+rec_b);
+        else
+            f1_b = 0;
+        end
         
         % Store the results of this frame
         list_tp_a = [list_tp_a ; tp_a];
@@ -55,6 +63,27 @@ function [ ] = task2()
         list_f1_a = [list_f1_a ; f1_a];
         list_f1_b = [list_f1_b ; f1_b];
     end
-    a = 1;
+    figure
+    plot(list_fg);
+    hold on;
+    plot(list_tp_a);
+    plot(list_tp_b);
+    title('Graph 1');
+    xlabel('frame')
+    ylabel('TP')
+    legend('Total Foreground','TP Test A', 'TP Test B');
+    
+    waitforbuttonpress;
+    clf
+    hold off;
+    
+    plot(list_f1_a);
+    hold on;
+    plot(list_f1_b);
+    title('Graph 2');
+    xlabel('frame')
+    ylabel('F1 Score')
+    legend('F1 score Test A', 'F1 score Test B');
+    
 end
 
