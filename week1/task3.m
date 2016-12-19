@@ -32,33 +32,26 @@ function [ ] = task3()
      res45 = imread('../results/LKflow_000045_10.png');
      [r45u, r45v] = getFlowData(res45);
      mse45 = mean(mean((t45u-r45u + t45v-r45v).^2));
-     pip45 = mean(mean(sqrt((t45u-r45u + t45v-r45v).^2)>3))*100;
-     imshow(sqrt((t45u-r45u + t45v-r45v).^2)>3);
+     pepn45 = mean(mean(sqrt((t45u-r45u + t45v-r45v).^2)>3))*100;
      
-     figure;
-     subplot(2,2,1)
-     quiver(t45u, t45v);
-     set(gca,'Ydir','reverse')
-     subplot(2,2,2)
-     quiver(r45u, r45v);
-     set(gca,'Ydir','reverse')
+     subplot(2,2,1);
+     imshow((t45u-r45u + t45v-r45v).^2, [0, max(max(t45v-r45v))]);
+     
+     subplot(2,2,2);
+     imshow(sqrt((t45u-r45u + t45v-r45v).^2)>3, [0, 1]);
      
      train157 = imread('../training/flow_noc/000157_10.png');
      [t157u, t157v] = getFlowData(train157);
      res157 = imread('../results/LKflow_000157_10.png');
      [r157u, r157v] = getFlowData(res157);
      mse157 = mean(mean((t157u-r157u + t157v-r157v).^2));
-     pip157 = mean(mean(sqrt((t157u-r157u + t157v-r157v).^2)>3))*100;
+     pepn157 = mean(mean(sqrt((t157u-r157u + t157v-r157v).^2)>3))*100;
+          
+     subplot(2,2,3);
+     imshow((t157u-r157u + t157v-r157v).^2, [0, max(max(t157v-r157v))]);
      
-     subplot(2,2,3)
-     quiver(t157u, t157v);
-     set(gca,'Ydir','reverse')
-     subplot(2,2,4)
-     quiver(r157u, r157v);
-     set(gca,'Ydir','reverse')
-     
-     figure;
-     imshow(sqrt((t157u-r157u + t157v-r157v).^2)>3);    
+     subplot(2,2,4);
+     imshow(sqrt((t157u-r157u + t157v-r157v).^2)>3, [0, 1]);
 end
 
 function [u, v] =getFlowData(flow_img)
