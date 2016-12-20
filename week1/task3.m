@@ -35,6 +35,24 @@ function [ ] = task3()
      subplot (1, 2, 2);
      imshow(cerr157);
      colormap jet;
+     
+     error45 = sqrt((t45u-r45u + t45v-r45v).^2);
+     norm45 = error45 - min(error45(:));
+     norm45 = norm45 ./ max(norm45(:));
+     color45 = ind2rgb(floor(norm45*255), jet(256));
+     
+     
+     error157 = sqrt((t157u-r157u + t157v-r157v).^2);
+     norm157 = error157 - min(error157(:));
+     norm157 = norm157 ./ max(norm157(:));
+     color157 = ind2rgb(floor(norm157*255), jet(256));
+     
+     figure
+     subplot(1, 2, 1);
+     imshow(color45);
+     subplot(1, 2, 2);
+     imshow(color157);
+     
 
 end
 
