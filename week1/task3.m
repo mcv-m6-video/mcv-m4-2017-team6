@@ -40,7 +40,7 @@ function [ ] = task3()
      subplot(2,2,2);
      imshow(sqrt((t45u-r45u + t45v-r45v).^2)>3, [0, 1]);
      
-     train157 = imread('../training/flow_noc/000157_10.png');
+     [train157, map] = imread('../training/flow_noc/000157_10.png');
      [t157u, t157v] = getFlowData(train157);
      res157 = imread('../results/LKflow_000157_10.png');
      [r157u, r157v] = getFlowData(res157);
@@ -52,6 +52,17 @@ function [ ] = task3()
      
      subplot(2,2,4);
      imshow(sqrt((t157u-r157u + t157v-r157v).^2)>3, [0, 1]);
+     
+     cerr45 = (t45u-r45u + t45v-r45v).^2;
+     cerr157 = (t157u-r157u + t157v-r157v).^2;
+     figure
+     subplot(1, 2, 1);
+     imshow(cerr45);
+     colormap jet;
+     subplot (1, 2, 2);
+     imshow(cerr157);
+     colormap jet;
+
 end
 
 function [u, v] =getFlowData(flow_img)
