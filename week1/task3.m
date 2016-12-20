@@ -34,11 +34,14 @@ function [ ] = task3()
      mse45 = mean(mean((t45u-r45u + t45v-r45v).^2));
      pepn45 = mean(mean(sqrt((t45u-r45u + t45v-r45v).^2)>3))*100;
      
-     subplot(2,2,1);
+     fig = figure;
+     %sub = subplot(2,2,1);
+     colormap('hot');
      imshow((t45u-r45u + t45v-r45v).^2, [0, max(max(t45v-r45v))]);
+     colorbar;
      
-     subplot(2,2,2);
-     imshow(sqrt((t45u-r45u + t45v-r45v).^2)>3, [0, 1]);
+     %subplot(2,2,2);
+     %imshow(sqrt((t45u-r45u + t45v-r45v).^2)>3, [0, 1]);
      
      train157 = imread('../training/flow_noc/000157_10.png');
      [t157u, t157v] = getFlowData(train157);
@@ -47,13 +50,16 @@ function [ ] = task3()
      mse157 = mean(mean((t157u-r157u + t157v-r157v).^2));
      pepn157 = mean(mean(sqrt((t157u-r157u + t157v-r157v).^2)>3))*100;
           
-     subplot(2,2,3);
+     %sub=subplot(2,2,3);
+     fig = figure;
+     colormap('hot');
      imshow((t157u-r157u + t157v-r157v).^2, [0, max(max(t157v-r157v))]);
+     colorbar;
      
-     subplot(2,2,4);
-     imshow(sqrt((t157u-r157u + t157v-r157v).^2)>3, [0, 1]);
+     %subplot(2,2,4);
+     %imshow(sqrt((t157u-r157u + t157v-r157v).^2)>3, [0, 1]);
 end
-
+    
 function [u, v] =getFlowData(flow_img)
     u = (double(flow_img(:,:,1))-2^15)/64.0;
     v = (double(flow_img(:,:,2))-2^15)/64.0;
