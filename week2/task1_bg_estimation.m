@@ -1,12 +1,12 @@
-function [  ] = task1_bg_estimation(IN_PATH, sequence, meanP, varP)
+function [  ] = task1_bg_estimation(IN_PATH, sequence, meanP, varP, n_samples)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
     IN_PATH = strcat(IN_PATH, 'input/');
         
-    first = sequence(1);
+    first = sequence(1) + n_samples + 1;
     last = sequence(2);
     
-    alpha = 0.5;
+    alpha = 1;
     for i = first : last
         i
         in = rgb2gray( imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg')) );
@@ -27,7 +27,7 @@ function [  ] = task1_bg_estimation(IN_PATH, sequence, meanP, varP)
         imshow(in);
         subplot(1, 2, 2);
         imshow(foreground);
-        pause(0.01)
+        pause(0.0001)
     end
 end
 
