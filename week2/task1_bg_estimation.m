@@ -1,4 +1,4 @@
-function [TPaccum, FPaccum, FNaccum, TNaccum] = task1_bg_estimation(PATH, sequence, meanP, varP, n_samples, alpha)
+function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec] = task1_bg_estimation(PATH, sequence, meanP, varP, n_samples, alpha)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
     IN_PATH = strcat(PATH, 'input/');
@@ -25,28 +25,15 @@ function [TPaccum, FPaccum, FNaccum, TNaccum] = task1_bg_estimation(PATH, sequen
         
         %plot_estimation(foreground, in);
     end
+%     if TP == 0 || FP == 0 || FN == 0
+%         TP
+%     end
+    [prec, rec] = performance_metrics_prec_rec(TPaccum, FPaccum, FNaccum);
 end
 
-function [TP, FP, FN, TN] = performance_results(pixelCandidates, gt)
-    %fg = foreground;
-    %bg = ~foreground;
-    
-    pixelGt = gt==255;
-    %gt_bg = gt <= 50;
-    gt_eval1 = gt == 85;
-    gt_eval2 = gt == 170;
-    gt_eval = ~(gt_eval1 + gt_eval2);
-    
-    TP_mat = pixelCandidates>0 & pixelGt>0;
-    FP_mat = pixelCandidates>0 & pixelGt==0;
-    FN_mat = pixelCandidates==0 & pixelGt>0;
-    TN_mat = pixelCandidates==0 & pixelGt==0;
-    
-    TP = sum(sum( TP_mat(gt_eval) ));
-    FP = sum(sum( FP_mat(gt_eval) ));
-    FN = sum(sum( FN_mat(gt_eval) ));
-    TN = sum(sum( TN_mat(gt_eval) ));
-    
+function [prec, rec] = performance_metrics_prec_rec(TP, FP, FN)
+    prec = TP / (TP + FP);
+    rec = TP / (TP + FN);   
 end
 
 function [] = plot_estimation(foreground, in)

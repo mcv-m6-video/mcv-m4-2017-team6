@@ -1,4 +1,4 @@
-function [ p_mean, p_var ] = task1_bg_modeling(IN_PATH, sequence, n_samples)
+function [ p_mean, p_var ] = task1_gaussian_modeling(IN_PATH, sequence, n_samples)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
     
