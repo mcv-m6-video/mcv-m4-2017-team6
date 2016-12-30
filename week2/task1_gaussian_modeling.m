@@ -18,7 +18,6 @@ function [ p_mean, p_var ] = task1_gaussian_modeling(IN_PATH, sequence, n_sample
     
     p_mean = mean(seq, 3);
     p_var = var(seq, 0, 3);
-    
 
 end
 

@@ -1,4 +1,4 @@
-function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, intervals)
+function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, intervals, rho, adaptative)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
     MODELING_RATIO = 0.5;
@@ -20,7 +20,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, intervals)
     disp('BACKGROUND ESTIMATION');
     for i = 1 : samples
         [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i)] = ...
-            task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i));
+            task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, adaptative);
     end
     
     figure

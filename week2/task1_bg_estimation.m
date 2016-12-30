@@ -1,4 +1,5 @@
-function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec] = task1_bg_estimation(PATH, sequence, meanP, varP, n_samples, alpha)
+function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
+    task1_bg_estimation(PATH, sequence, meanP, varP, n_samples, alpha, rho, adaptative)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
     IN_PATH = strcat(PATH, 'input/');
@@ -15,8 +16,15 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec] = task1_bg_estimation(P
         
         foreground = zeros(size(in, 1), size(in, 2));
         foreground = abs(in - meanP) >= (alpha * (varP + 2.0));
+        if adaptative
+            % Update mean and variance (Adaptative model)
+            meanP(~foreground) = rho*in(~foreground) + ...
+                                (1 - rho)*meanP(~foreground);
+            varP(~foreground) = rho*(in(~foreground) - meanP(~foreground)).^2 + ...
+                                (1 - rho)*varP(~foreground);
+        end
         
-        [TP, FP, FN, TN] = performance_results(foreground, gt);
+        [TP, FP, FN, TN] = performance_pixel(foreground, gt);
         
         TPaccum = TPaccum + TP;
         FPaccum = FPaccum + FP;
@@ -25,15 +33,8 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec] = task1_bg_estimation(P
         
         %plot_estimation(foreground, in);
     end
-%     if TP == 0 || FP == 0 || FN == 0
-%         TP
-%     end
-    [prec, rec] = performance_metrics_prec_rec(TPaccum, FPaccum, FNaccum);
-end
 
-function [prec, rec] = performance_metrics_prec_rec(TP, FP, FN)
-    prec = TP / (TP + FP);
-    rec = TP / (TP + FN);   
+    [prec, rec, f1score] = performance_metrics(TPaccum, FPaccum, FNaccum);
 end
 
 function [] = plot_estimation(foreground, in)

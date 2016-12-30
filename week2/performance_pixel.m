@@ -1,4 +1,4 @@
-function [TP, FP, FN, TN] = performance_results(pixelCandidates, gt)
+function [TP, FP, FN, TN] = performance_pixel(pixelCandidates, gt)
     
     pixelGt = gt==255;
     %gt_bg = gt <= 50;
