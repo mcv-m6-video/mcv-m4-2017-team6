@@ -14,8 +14,9 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         gt = imread(strcat(GT_PATH, 'gt00', sprintf('%04d',i), '.png'));
         in = im2double(in);
         
-        foreground = zeros(size(in, 1), size(in, 2));
-        foreground = abs(in - meanP) >= (alpha * (varP + 2.0));
+        %foreground = zeros(size(in, 1), size(in, 2));
+        foreground = abs(in - meanP) <= (alpha * (varP + 2.0));
+        
         if adaptative
             % Update mean and variance (Adaptative model)
             meanP(~foreground) = rho*in(~foreground) + ...
@@ -31,17 +32,18 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         FNaccum = FNaccum + FN;
         TNaccum = TNaccum + TN;
         
-        %plot_estimation(foreground, in);
+        plot_estimation(foreground, in, gt);
     end
-
     [prec, rec, f1score] = performance_metrics(TPaccum, FPaccum, FNaccum);
 end
 
-function [] = plot_estimation(foreground, in)
-    subplot(1, 2, 1);
+function [] = plot_estimation(foreground, in, gt)
+    subplot(2, 2, 1);
     imshow(in);
-    subplot(1, 2, 2);
+    subplot(2, 2, 2);
     imshow(foreground);
+    subplot(2, 2, 3)
+    imshow(gt==255);
     pause(0.0001)
 end
 

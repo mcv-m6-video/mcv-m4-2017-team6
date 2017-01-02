@@ -4,6 +4,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, intervals, rho, adaptati
     MODELING_RATIO = 0.5;
 
     n_samples = int32( (SEQ(2) - SEQ(1)) * MODELING_RATIO );
+    
     disp('MODELING THE BACKGROUND');
     [meanP, varP] = task1_gaussian_modeling(PATH, SEQ, n_samples);
     disp('MODELING DONE');
@@ -16,10 +17,11 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, intervals, rho, adaptati
     TNaccum = zeros(1, samples);
     prec = zeros(1, samples);
     rec = zeros(1, samples);
+    f1score = zeros(1, samples);
     
     disp('BACKGROUND ESTIMATION');
     for i = 1 : samples
-        [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i)] = ...
+        [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
             task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, adaptative);
     end
     
@@ -37,5 +39,10 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, intervals, rho, adaptati
     ylabel('Precision');
     auc = samples * trapz(prec);
     %legend(strcat('AUC - ', num2str(auc)));
+    
+    [value, idx] = max(f1score);
+    disp(sprintf('F1-score: %f -- Alpha: %f', value, alpha(idx)));
+    disp(sprintf('Precision: %f -- Recall: %f', prec(idx), rec(idx)));
+    disp(sprintf('Area under the curve (auc): %f', auc));
 end
 

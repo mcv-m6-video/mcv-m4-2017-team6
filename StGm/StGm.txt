@@ -1,0 +1,8 @@
+The 3 functions here implement the Stauffer and Grimson. This code only supports color images.
+
+- MultG_fun.m: Main function than parses the entire sequence reading frames and trains the gaussians and then segments the foreground (you should use or modify this function to suit your needs). It calls the following (internal) functions:
+
+- StGm.m: Function to train and update the gaussians
+
+- Foreground.m: Function to segment the foreground
+
