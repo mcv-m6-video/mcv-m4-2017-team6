@@ -28,7 +28,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
         case 'ALPHA_SEARCH'
             % Perform Search of the best Alpha with fixed rho (Task1)
             disp('BEST ALPHA SEARCH -- BACKGROUND ESTIMATION');
-            alpha = linspace(0.1, 1, samples);
+            alpha = linspace(0.1, 5, samples);
             for i = 1 : samples
                     [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
                         task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, adaptative, COLOR);
@@ -37,12 +37,21 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             disp(sprintf('F1-score: %f -- Alpha: %f', valueR, alpha(idxR)));
             disp(sprintf('Precision: %f -- Recall: %f', prec(idxR), rec(idxR)));
 
+            % TP, TN, FP, FN vs Alpha
             figure
             plot(alpha, TPaccum, alpha, FPaccum, alpha, FNaccum, alpha, TNaccum);
             title(strcat(seq_name, '- Pixel evaluation'));
             xlabel('Alpha (threshold)');
             ylabel('Num. pixels');
             legend('TP', 'FP', 'FN', 'TN');
+
+            % F1-score vs Alpha
+            figure
+            plot(alpha, f1score);
+            title(strcat(seq_name, '- F1 vs Alpha'));
+            xlabel('Alpha (threshold)');
+            ylabel('F1 Score');
+            %legend('TP', 'FP', 'FN', 'TN');
 
             figure
             plot(rec, prec);
