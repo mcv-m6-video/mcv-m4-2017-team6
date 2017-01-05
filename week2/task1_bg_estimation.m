@@ -1,5 +1,5 @@
 function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
-    task1_bg_estimation(PATH, sequence, meanP, varP, n_samples, alpha, rho, adaptative)
+    task1_bg_estimation(PATH, sequence, meanP, varP, n_samples, alpha, rho, adaptative, color)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
     IN_PATH = strcat(PATH, 'input/');
@@ -10,11 +10,13 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
     
     TPaccum = 0; FPaccum = 0; FNaccum = 0; TNaccum = 0;
     for i = first : last
-        in = rgb2gray( imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg')) );
+        in = imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg') );
+        if ~color
+            in = rgb2gray(in);
+        end
         gt = imread(strcat(GT_PATH, 'gt00', sprintf('%04d',i), '.png'));
         in = im2double(in);
         
-        %foreground = zeros(size(in, 1), size(in, 2));
         foreground = abs(in - meanP) <= (alpha * (varP + 2.0));
         
         if adaptative
@@ -32,7 +34,7 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         FNaccum = FNaccum + FN;
         TNaccum = TNaccum + TN;
         
-        plot_estimation(foreground, in, gt);
+        %plot_estimation(foreground, in, gt);
     end
     [prec, rec, f1score] = performance_metrics(TPaccum, FPaccum, FNaccum);
 end
