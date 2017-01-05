@@ -9,7 +9,7 @@ function [ ] = task1(dataset_path, option)
     ADAPTATIVE = true;
     RHO = 0.5; % Setting RHO = 0 is the same as using non-adaptative
     OPT = option;
-    COLOR = true;
+    COLOR = false;
     
     % HIGHWAY SEQUENCE EXPERIMENT
     HIGHWAY_SEQ = [1050, 1350];
