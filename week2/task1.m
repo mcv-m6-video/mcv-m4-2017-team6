@@ -21,13 +21,13 @@ function [ ] = task1(dataset_path, option)
 %     FALL_SEQ = [1460, 1560];
 %     FALL_PATH = strcat(dataset_path, 'dynamicBackground/fall/');
 %     disp('##### FALL SEQUENCE EXPERIMENT #####')
-%     task1_bg_experiment(FALL_SEQ, FALL_PATH, 'FALL', INTERVALS, RHO, ADAPTATIVE, OPT);
+%     task1_bg_experiment(FALL_SEQ, FALL_PATH, 'FALL', INTERVALS, RHO, ADAPTATIVE, OPT, COLOR);
     
     % TRAFFIC SEQUENCE EXPERIMENT
 %     TRAFFIC_SEQ = [950, 1050];
 %     TRAFFIC_PATH = strcat(dataset_path, 'cameraJitter/traffic/');
 %     disp('##### TRAFFIC SEQUENCE EXPERIMENT #####')
-%     task1_bg_experiment(TRAFFIC_SEQ, TRAFFIC_PATH, 'TRAFFIC', INTERVALS, RHO, ADAPTATIVE, OPT);
+%     task1_bg_experiment(TRAFFIC_SEQ, TRAFFIC_PATH, 'TRAFFIC', INTERVALS, RHO, ADAPTATIVE, OPT, COLOR);
 
 end
 
