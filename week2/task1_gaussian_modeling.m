@@ -31,6 +31,14 @@ function [ p_mean, p_var ] = task1_gaussian_modeling(IN_PATH, sequence, n_sample
         p_mean = mean(seq, 3);
         p_var = var(seq, 0, 3);
     end
+    
+    % (DEBUG) View mean and variance to assess that they have been computed right
+    if false
+        imshow(mat2gray(p_mean));
+        waitforbuttonpress;
+        imshow(mat2gray(p_var));
+        waitforbuttonpress;
+    end
 
 end
 
