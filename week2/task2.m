@@ -5,9 +5,9 @@ function [ ] = task1(dataset_path, option)
 
     dataset_path = strcat(dataset_path, 'dataset/');
     
-    INTERVALS = 100;
-    ADAPTATIVE = false;
-    RHO = 0; % Setting RHO = 0 is the same as using non-adaptative
+    INTERVALS = 10;
+    ADAPTATIVE = true;
+    RHO = 0.5; % Setting RHO = 0 is the same as using non-adaptative
     OPT = option;
     COLOR = false;
     
