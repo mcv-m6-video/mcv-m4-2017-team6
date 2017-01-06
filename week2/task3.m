@@ -16,11 +16,7 @@ PATH = strcat(dataset_path, 'dataset/baseline/highway/');
 detector = vision.ForegroundDetector(...
     'NumTrainingFrames', floor((SEQ(2)-SEQ(1))/2), ...
     'NumGaussians', numGaussians);
-
-
-
 videoPlayer = vision.VideoPlayer();
-
 
 IN_PATH = strcat(PATH, 'input/');
 GT_PATH = strcat(PATH, 'groundtruth/');
@@ -29,7 +25,7 @@ last = SEQ(2);
 
 TPaccum = 0; FPaccum = 0; FNaccum = 0; TNaccum = 0;
 for i = first : last
-    frame = rgb2gray( imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg')) );
+    frame = im2double(rgb2gray( imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg')) ));
     fgMask = step(detector, frame);
     step(videoPlayer, fgMask);
     gt = imread(strcat(GT_PATH, 'gt00', sprintf('%04d',i), '.png')) ;
