@@ -38,6 +38,31 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             disp(sprintf('F1-score: %f -- Rho: %f', valueR, rho(idxR)));
             disp(sprintf('Precision: %f -- Recall: %f', prec(idxR), rec(idxR)));
             
+             % TP, TN, FP, FN vs Rho
+            figure
+            plot(rho, TPaccum, rho, FPaccum, rho, FNaccum, rho, TNaccum);
+            title(strcat(seq_name, '- Pixel evaluation'));
+            xlabel('Rho (adaptative)');
+            ylabel('Num. pixels');
+            legend('TP', 'FP', 'FN', 'TN');
+
+            % F1-score vs Alpha
+            figure
+            plot(alpha, f1score);
+            title(strcat(seq_name, '- F1 vs Rho'));
+            xlabel('Rho (rho)');
+            ylabel('F1 Score');
+            %legend('TP', 'FP', 'FN', 'TN');
+
+            figure
+            plot(rec, prec);
+            title(strcat(seq_name, ' - Precision Recall'));
+            xlabel('Recall');
+            ylabel('Precision');
+            auc = samples * trapz(prec);
+            %legend(strcat('AUC - ', num2str(auc)));
+            disp(sprintf('Area under the curve (auc): %f', auc));
+            
         case 'ALPHA_SEARCH'
             % Perform Search of the best Alpha with fixed rho (Task1)
             disp('BEST ALPHA SEARCH -- BACKGROUND ESTIMATION');
