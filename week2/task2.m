@@ -1,11 +1,11 @@
 function [ ] = task1(dataset_path, option)
 %UNTITLED Summary of this function goes here
 %   Params:
-%       option: values -> 'GRID_SEARCH' or 'ALPHA_SEARCH'
+%       option: values -> 'GRID_SEARCH' or 'ALPHA_SEARCH' or 'RHO_SEARCH'
 
     dataset_path = strcat(dataset_path, 'dataset/');
     
-    INTERVALS = 10;
+    INTERVALS = 100;
     ADAPTATIVE = true;
     RHO = 0.5; % Setting RHO = 0 is the same as using non-adaptative
     OPT = option;
@@ -21,13 +21,13 @@ function [ ] = task1(dataset_path, option)
 %     FALL_SEQ = [1460, 1560];
 %     FALL_PATH = strcat(dataset_path, 'dynamicBackground/fall/');
 %     disp('##### FALL SEQUENCE EXPERIMENT #####')
-%     task1_bg_experiment(FALL_SEQ, FALL_PATH, 'FALL', INTERVALS, RHO, ADAPTATIVE, OPT);
+%     task1_bg_experiment(FALL_SEQ, FALL_PATH, 'FALL', INTERVALS, RHO, ADAPTATIVE, OPT, COLOR);
     
     % TRAFFIC SEQUENCE EXPERIMENT
 %     TRAFFIC_SEQ = [950, 1050];
 %     TRAFFIC_PATH = strcat(dataset_path, 'cameraJitter/traffic/');
 %     disp('##### TRAFFIC SEQUENCE EXPERIMENT #####')
-%     task1_bg_experiment(TRAFFIC_SEQ, TRAFFIC_PATH, 'TRAFFIC', INTERVALS, RHO, ADAPTATIVE, OPT);
+%     task1_bg_experiment(TRAFFIC_SEQ, TRAFFIC_PATH, 'TRAFFIC', INTERVALS, RHO, ADAPTATIVE, OPT, COLOR);
 
 end
 

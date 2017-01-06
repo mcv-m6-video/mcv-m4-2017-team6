@@ -25,6 +25,19 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             [valueC, idxC] = max(valueR);
             disp(sprintf('F1-score: %f -- Best Alpha: %f -- Best Rho: %f', valueC, alpha(idxR(idxC)), rho(idxR(idxC)) ));
             disp(sprintf('Precision: %f -- Recall: %f', prec(idxR(idxC), idxC), rec(idxR(idxC), idxC)));
+        case 'RHO_SEARCH'
+            % Fix alpha and search for a good rho (task 2)
+            disp('BEST RHO SEARCH -- BACKGROUND ESTIMATION');
+            alpha = 1.832323; % hardcoded for highway
+            rho = linspace(0.0, 5, samples);
+            for i = 1 : samples
+                    [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
+                        task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho(i), adaptative, COLOR);
+            end
+            [valueR, idxR] = max(f1score);
+            disp(sprintf('F1-score: %f -- Rho: %f', valueR, rho(idxR)));
+            disp(sprintf('Precision: %f -- Recall: %f', prec(idxR), rec(idxR)));
+            
         case 'ALPHA_SEARCH'
             % Perform Search of the best Alpha with fixed rho (Task1)
             disp('BEST ALPHA SEARCH -- BACKGROUND ESTIMATION');
