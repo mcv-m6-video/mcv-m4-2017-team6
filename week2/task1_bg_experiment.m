@@ -13,7 +13,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
     switch OPT
         case 'GRID_SEARCH'
             disp('PARAMS GRID SEARCH -- BACKGROUND ESTIMATION');
-            alpha = linspace(0, 1, samples);
+            alpha = linspace(0, 5, samples);
             rho = linspace(0, 1, samples);
             for i = 1 : samples
                 for j = 1 : samples
@@ -29,7 +29,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             % Fix alpha and search for a good rho (task 2)
             disp('BEST RHO SEARCH -- BACKGROUND ESTIMATION');
             alpha = 1.832323; % hardcoded for highway
-            rho = linspace(0.0, 5, samples);
+            rho = linspace(0.0, 1, samples);
             for i = 1 : samples
                     [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
                         task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho(i), adaptative, COLOR);
