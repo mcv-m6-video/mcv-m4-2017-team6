@@ -48,7 +48,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
 
             % F1-score vs Alpha
             figure
-            plot(alpha, f1score);
+            plot(rho, f1score);
             title(strcat(seq_name, '- F1 vs Rho'));
             xlabel('Rho (rho)');
             ylabel('F1 Score');
