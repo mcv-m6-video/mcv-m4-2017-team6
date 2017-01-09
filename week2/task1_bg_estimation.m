@@ -15,7 +15,6 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
             in = rgb2gray(in);
         end
         gt = imread(strcat(GT_PATH, 'gt00', sprintf('%04d',i), '.png'));
-        %in = im2double(in);
         in = double(in);
         
         foreground = abs(in - meanP) >= (alpha * (sqrt(varP) + 2.0));

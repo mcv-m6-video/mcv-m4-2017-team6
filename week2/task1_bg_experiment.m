@@ -8,6 +8,10 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
     disp('MODELING THE BACKGROUND');
     [meanP, varP] = task1_gaussian_modeling(PATH, SEQ, n_samples, COLOR);
     disp('MODELING DONE');
+%     imshow(mat2gray(meanP));
+%     figure
+%     imshow(mat2gray(varP));
+%     waitforbuttonpress;
     
     % Perform Grid search for alpha and rho parameters (task2)
     switch OPT
@@ -97,7 +101,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             xlabel('Recall');
             ylabel('Precision');
             auc = samples * trapz(prec);
-            %legend(strcat('AUC - ', num2str(auc)));
+            legend(sprintf('AUC: %f', auc));
             disp(sprintf('Area under the curve (auc): %f', auc));
         otherwise
             disp('Invalid option');

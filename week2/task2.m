@@ -1,11 +1,11 @@
-function [ ] = task1(dataset_path, option)
+function [ ] = task2(dataset_path, option)
 %UNTITLED Summary of this function goes here
 %   Params:
-%       option: values -> 'GRID_SEARCH' or 'ALPHA_SEARCH' or 'RHO_SEARCH'
+%       option: values -> 'GRID_SEARCH' or 'RHO_SEARCH'
 
     dataset_path = strcat(dataset_path, 'dataset/');
     
-    INTERVALS = 100;
+    INTERVALS = 20;
     ADAPTATIVE = true;
     RHO = 0.5; % Setting RHO = 0 is the same as using non-adaptative
     OPT = option;
