@@ -17,8 +17,14 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         gt = imread(strcat(GT_PATH, 'gt00', sprintf('%04d',i), '.png'));
         in = double(in);
         
-        foreground = abs(in - meanP) >= (alpha * (sqrt(varP) + 2.0));
         
+        
+        aux_foreground = abs(in - meanP) >= (alpha * (sqrt(varP) + 2.0));
+        foreground = aux_foreground;
+        
+        if color
+            foreground = aux_foreground(:,:,1) .* aux_foreground(:,:,2) .* aux_foreground(:,:,3);
+        end
         %imshow(in);
         %waitforbuttonpress;
         %imshow(mat2gray(foreground));
