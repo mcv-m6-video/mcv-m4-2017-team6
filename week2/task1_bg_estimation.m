@@ -14,7 +14,7 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         if ~color
             in = rgb2gray(in);
         else
-            in = rgb2yuv(in);
+            in = changeColorScape(in);
             %in = cat(3, in(:,:,1), in(:, :,2));
         end
         gt = imread(strcat(GT_PATH, 'gt00', sprintf('%04d',i), '.png'));
