@@ -29,10 +29,17 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             [valueC, idxC] = max(valueR);
             disp(sprintf('F1-score: %f -- Best Alpha: %f -- Best Rho: %f', valueC, alpha(idxR(idxC)), rho(idxR(idxC)) ));
             disp(sprintf('Precision: %f -- Recall: %f', prec(idxR(idxC), idxC), rec(idxR(idxC), idxC)));
+            surf(alpha, rho, f1score);
+            title(strcat(seq_name, '- F1 Score'));
+            xlabel('Alpha');
+            ylabel('Rho');
+            zlabel('F1-Score');
         case 'RHO_SEARCH'
             % Fix alpha and search for a good rho (task 2)
             disp('BEST RHO SEARCH -- BACKGROUND ESTIMATION');
-            alpha = 1.832323; % hardcoded for highway
+            % alpha = 1.832323; % hardcoded for highway
+            % alpha = 4.5; % FALL
+            alpha = 1.8; % TRAFFIC
             rho = linspace(0.0, 1, samples);
             for i = 1 : samples
                     [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
