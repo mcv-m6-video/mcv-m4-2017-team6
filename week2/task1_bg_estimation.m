@@ -13,12 +13,23 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         in = imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg') );
         if ~color
             in = rgb2gray(in);
+        else
+            in = changeColorSpace(in);
+            %in = cat(3, in(:,:,1), in(:, :,2));
         end
         gt = imread(strcat(GT_PATH, 'gt00', sprintf('%04d',i), '.png'));
         in = double(in);
+              
         
-        foreground = abs(in - meanP) >= (alpha * (sqrt(varP) + 2.0));
+        aux_foreground = abs(in - meanP) >= (alpha * (sqrt(varP) + 2.0));
         
+        foreground = aux_foreground(:,:,1);
+        if size(foreground, 3) > 1
+            for j=2:size(foreground,3)
+                foreground = foreground(:,:) .* aux_foreground(:,:,j);
+            end
+        end
+
         %imshow(in);
         %waitforbuttonpress;
         %imshow(mat2gray(foreground));

@@ -13,6 +13,8 @@ function [ p_mean, p_var ] = task1_gaussian_modeling(IN_PATH, sequence, n_sample
         count = 1;
         for i = first : last
             in = imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg'));
+            in = changeColorSpace(in);
+            %in = cat(3, in(:,:,1), in(:,:,2));
             seq(:,:,:,count) = in(:,:,:);
             count = count + 1;
         end
