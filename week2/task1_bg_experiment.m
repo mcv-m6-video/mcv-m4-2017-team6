@@ -110,6 +110,16 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             auc = samples * trapz(prec);
             legend(sprintf('AUC: %f', auc));
             disp(sprintf('Area under the curve (auc): %f', auc));
+        case 'fixed'
+            disp('FIXED PARAMETERS EVALUATION -- BACKGROUND ESTIMATION');
+            alpha = 2.9;
+            rho = 0.58;
+            [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
+                        task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho, adaptative, COLOR);
+                    
+            disp(sprintf('F1-score: %f -- Alpha: %f', f1score, alpha));
+            disp(sprintf('Precision: %f -- Recall: %f', prec, rec));
+                    
         otherwise
             disp('Invalid option');
     end
