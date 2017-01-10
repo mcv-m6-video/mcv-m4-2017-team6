@@ -19,6 +19,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             disp('PARAMS GRID SEARCH -- BACKGROUND ESTIMATION');
             alpha = linspace(0, 5, samples);
             rho = linspace(0, 1, samples);
+            
             for i = 1 : samples
                 for j = 1 : samples
                     [TPaccum(i,j), FPaccum(i,j), FNaccum(i,j), TNaccum(i,j), prec(i,j), rec(i,j), f1score(i,j)] = ...
@@ -27,7 +28,9 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             end
             [valueR, idxR] = max(f1score);
             [valueC, idxC] = max(valueR);
-            disp(sprintf('F1-score: %f -- Best Alpha: %f -- Best Rho: %f', valueC, alpha(idxR(idxC)), rho(idxR(idxC)) ));
+            [m n] = max(f1score(:));
+            [x y] = ind2sub(size(f1score),n);
+            disp(sprintf('F1-score: %f -- Best Alpha: %f -- Best Rho: %f', valueC, alpha(y), rho(x) ));
             disp(sprintf('Precision: %f -- Recall: %f', prec(idxR(idxC), idxC), rec(idxR(idxC), idxC)));
             surf(alpha, rho, f1score);
             title(strcat(seq_name, '- F1 Score'));
@@ -112,11 +115,11 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             disp(sprintf('Area under the curve (auc): %f', auc));
         case 'fixed'
             disp('FIXED PARAMETERS EVALUATION -- BACKGROUND ESTIMATION');
-            alpha = 2.9;
-            rho = 0.58;
+            alpha = 2.5;
+            rho = 1;
             [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
                         task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho, adaptative, COLOR);
-                    
+                              
             disp(sprintf('F1-score: %f -- Alpha: %f', f1score, alpha));
             disp(sprintf('Precision: %f -- Recall: %f', prec, rec));
                     

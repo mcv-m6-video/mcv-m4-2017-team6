@@ -1,9 +1,12 @@
 function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
-    task1_bg_estimation(PATH, sequence, meanP, varP, n_samples, alpha, rho, adaptative, color)
+    task1_bg_estimation(PATH, sequence, init_meanP, init_varP, n_samples, alpha, rho, adaptative, color)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
     IN_PATH = strcat(PATH, 'input/');
     GT_PATH = strcat(PATH, 'groundtruth/');
+    
+    meanP = init_meanP;
+    varP = init_varP;
         
     first = sequence(1) + n_samples + 1;
     last = sequence(2);
