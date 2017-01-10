@@ -1,17 +1,17 @@
 function [  ] = task3(dataset_path)
     tic
     %HIGHWAY SEQUENCE EXPERIMENT
-    SEQ = [1050, 1350];
-    PATH = strcat(dataset_path, 'dataset/baseline/highway/');
+%     SEQ = [1050, 1350];
+%     PATH = strcat(dataset_path, 'dataset/baseline/highway/');
 
     % FALL SEQUENCE EXPERIMENT
-    %     SEQ = [1460, 1560];
-    %     PATH = strcat(dataset_path, 'dataset/dynamicBackground/fall/');
+        SEQ = [1460, 1560];
+        PATH = strcat(dataset_path, 'dataset/dynamicBackground/fall/');
 
     % TRAFFIC SEQUENCE EXPERIMENT
-    % SEQ = [950, 1050];
-    % PATH = strcat(dataset_path, 'dataset/cameraJitter/traffic/');
-
+%     SEQ = [950, 1050];
+%     PATH = strcat(dataset_path, 'dataset/cameraJitter/traffic/');
+% 
 
     precisionList=[];
     recallList=[];
@@ -20,8 +20,8 @@ function [  ] = task3(dataset_path)
     minimumBackgroundRatioList=[];
     numGaussiansList = [];
     for learningRate=0.001:0.1:1
-        for minimumBackgroundRatio=0.000:0.1:1
-            for numGaussians=3:6
+        for minimumBackgroundRatio=0:0.1:1
+            for numGaussians=3:3
 
                 detector = vision.ForegroundDetector('NumGaussians', numGaussians, ...
                     'LearningRate', learningRate, ...
@@ -62,6 +62,7 @@ function [  ] = task3(dataset_path)
     title(strcat('Precision Recall'));
     xlabel('Recall');
     ylabel('Precision');
+    precisionList(isnan(precisionList)) = 0 ;
     AUC = trapz(precisionList)
     toc;
 end
