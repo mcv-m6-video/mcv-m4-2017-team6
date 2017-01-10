@@ -65,18 +65,17 @@ function [  ] = task3(dataset_path)
         plots{x,1}=recallList;
         plots{x,2}= precisionList;
         precisionList(isnan(precisionList)) = 0 ;
-        AUC(x) = abs(trapz(recallList,precisionList));
+        AUC(x) = abs(trapz(recallList,precisionList))
     end
-    fig=subplot(1,1,1)
+    figure(1)
     hold on;
     [maxF1, index] = max(f1List);
     for x=1:3
         plot(plots{x,1},plots{x,2})
     end
-   % disp(sprintf('Best configuration:\n Precision %f\n Recall %f\n F1 %f\n learningRate %f\n minimumBackgroundRatio %f\n numGaussians %f\n',precisionList(index), recallList(index),f1List(index),learningRateList(index),minimumBackgroundRatioList(index),numGaussiansList(index)));
+    disp(sprintf('Best configuration:\n Precision %f\n Recall %f\n F1 %f\n learningRate %f\n minimumBackgroundRatio %f\n numGaussians %f\n',precisionList(index), recallList(index),f1List(index),learningRateList(index),minimumBackgroundRatioList(index),numGaussiansList(index)));
     % plot(recallList, precisionList);
-    title(strcat('Precision Recall'));
-    legend(fig,strcat('Highway - AUC ', num2str(AUC(1))),strcat('Fall - AUC ', num2str(AUC(2))),strcat('Traffic - AUC ', num2str(AUC(3))))
+    title(strcat(name, ' - Precision Recall'));
     xlabel('Recall');
     ylabel('Precision');
 %     precisionList(isnan(precisionList)) = 0 ;
