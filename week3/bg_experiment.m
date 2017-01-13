@@ -1,4 +1,4 @@
-function [ ] = bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative, OPT, COLOR)
+function [ ] = bg_experiment(SEQ, PATH, seq_name, samples, alpha, rho, adaptative, OPT, COLOR, CONNECTIVITY, FILLING)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
     MODELING_RATIO = 0.5;
@@ -83,7 +83,7 @@ function [ ] = bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative, OPT,
             alpha = linspace(0.1, 5, samples);
             for i = 1 : samples
                     [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
-                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, adaptative, COLOR);
+                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, adaptative, COLOR, CONNECTIVITY, FILLING, 0);
             end
             [valueR, idxR] = max(f1score);
             disp(sprintf('F1-score: %f -- Alpha: %f', valueR, alpha(idxR)));
@@ -115,10 +115,12 @@ function [ ] = bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative, OPT,
             disp(sprintf('Area under the curve (auc): %f', auc));
         case 'fixed'
             disp('FIXED PARAMETERS EVALUATION -- BACKGROUND ESTIMATION');
-            alpha = 3.75;
-            rho = 0.25;
-            [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
-                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho, adaptative, COLOR);
+%             alpha = 3.75;
+%             rho = 0.25;
+            for i=1:10
+                [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
+                            bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho, adaptative, COLOR, 0, false, i);
+            end
                               
             disp(sprintf('F1-score: %f -- Alpha: %f', f1score, alpha));
             disp(sprintf('Precision: %f -- Recall: %f', prec, rec));
