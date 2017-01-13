@@ -1,4 +1,4 @@
-function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative, OPT, COLOR)
+function [ ] = bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative, OPT, COLOR)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
     MODELING_RATIO = 0.5;
@@ -6,7 +6,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
     n_samples = int32( (SEQ(2) - SEQ(1)) * MODELING_RATIO );
     
     disp('MODELING THE BACKGROUND');
-    [meanP, varP] = task1_gaussian_modeling(PATH, SEQ, n_samples, COLOR);
+    [meanP, varP] = gaussian_modeling(PATH, SEQ, n_samples, COLOR);
     disp('MODELING DONE');
 %     imshow(mat2gray(meanP));
 %     figure
@@ -23,7 +23,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             for i = 1 : samples
                 for j = 1 : samples
                     [TPaccum(i,j), FPaccum(i,j), FNaccum(i,j), TNaccum(i,j), prec(i,j), rec(i,j), f1score(i,j)] = ...
-                        task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho(j), adaptative,COLOR);
+                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho(j), adaptative,COLOR);
                 end
             end
             [valueR, idxR] = max(f1score);
@@ -46,7 +46,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             rho = linspace(0.0, 1, samples);
             for i = 1 : samples
                     [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
-                        task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho(i), adaptative, COLOR);
+                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho(i), adaptative, COLOR);
             end
             [valueR, idxR] = max(f1score);
             disp(sprintf('F1-score: %f -- Rho: %f', valueR, rho(idxR)));
@@ -83,7 +83,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             alpha = linspace(0.1, 5, samples);
             for i = 1 : samples
                     [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
-                        task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, adaptative, COLOR);
+                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, adaptative, COLOR);
             end
             [valueR, idxR] = max(f1score);
             disp(sprintf('F1-score: %f -- Alpha: %f', valueR, alpha(idxR)));
@@ -110,19 +110,18 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             title(strcat(seq_name, ' - Precision Recall'));
             xlabel('Recall');
             ylabel('Precision');
-            auc = trapz(rec, prec);
+            auc = samples * trapz(prec);
             legend(sprintf('AUC: %f', auc));
             disp(sprintf('Area under the curve (auc): %f', auc));
         case 'fixed'
             disp('FIXED PARAMETERS EVALUATION -- BACKGROUND ESTIMATION');
-			alpha = 3.75;
+            alpha = 3.75;
             rho = 0.25;
             [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
-                        task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho, adaptative, COLOR);
+                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho, adaptative, COLOR);
                               
             disp(sprintf('F1-score: %f -- Alpha: %f', f1score, alpha));
             disp(sprintf('Precision: %f -- Recall: %f', prec, rec));
-            
                     
         otherwise
             disp('Invalid option');
