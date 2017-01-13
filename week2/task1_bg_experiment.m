@@ -30,7 +30,7 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             [valueC, idxC] = max(valueR);
             [m n] = max(f1score(:));
             [x y] = ind2sub(size(f1score),n);
-            disp(sprintf('F1-score: %f -- Best Alpha: %f -- Best Rho: %f', valueC, alpha(y), rho(x) ));
+            disp(sprintf('F1-score: %f -- Best Alpha: %f -- Best Rho: %f', valueC, alpha(x), rho(y) ));
             disp(sprintf('Precision: %f -- Recall: %f', prec(idxR(idxC), idxC), rec(idxR(idxC), idxC)));
             surf(alpha, rho, f1score);
             title(strcat(seq_name, '- F1 Score'));
@@ -115,8 +115,8 @@ function [ ] = task1_bg_experiment(SEQ, PATH, seq_name, samples, rho, adaptative
             disp(sprintf('Area under the curve (auc): %f', auc));
         case 'fixed'
             disp('FIXED PARAMETERS EVALUATION -- BACKGROUND ESTIMATION');
-            alpha = 2.5;
-            rho = 1;
+            alpha = 3.75;
+            rho = 0.25;
             [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
                         task1_bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha, rho, adaptative, COLOR);
                               
