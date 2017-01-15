@@ -1,5 +1,5 @@
 function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
-    bg_estimation(PATH, sequence, init_meanP, init_varP, n_samples, alpha, rho, adaptative, color, connectivity,  filling, opening, morpho)
+    bg_estimation(PATH, sequence, init_meanP, init_varP, n_samples, alpha, rho, adaptative, color, connectivity,  filling, opening, morpho,se)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
     IN_PATH = strcat(PATH, 'input/');
@@ -26,11 +26,7 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         
         aux_foreground = abs(in - meanP) >= (alpha * (sqrt(varP) + 2.0));
         
-        if filling == true
-            for j=1:size(aux_foreground,3)
-                aux_foreground(:,:,j) = imfill(aux_foreground(:,:,j), connectivity, 'holes');
-            end
-        end
+        
         
         if opening > 0
             for j=1:size(aux_foreground,3)
@@ -39,7 +35,16 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         end
         
         if morpho %task3
-            
+            for j=1:size(aux_foreground,3)
+                aux_foreground(:,:,j) = imopen(aux_foreground(:,:,j), se);
+                aux_foreground(:,:,j) = imclose(aux_foreground(:,:,j), se);
+            end
+        end
+        
+        if filling == true
+            for j=1:size(aux_foreground,3)
+                aux_foreground(:,:,j) = imfill(aux_foreground(:,:,j), connectivity, 'holes');
+            end
         end
         
         foreground = aux_foreground(:,:,1);
@@ -51,8 +56,8 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
 
         %imshow(in);
         %waitforbuttonpress;
-        %imshow(mat2gray(foreground));
-        %waitforbuttonpress;
+%         imshow(mat2gray(foreground));
+%         waitforbuttonpress;
         
         if adaptative
             % Update mean and variance (Adaptative model)
@@ -69,7 +74,7 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         FNaccum = FNaccum + FN;
         TNaccum = TNaccum + TN;
         
-        %plot_estimation(foreground, in, gt);
+       % plot_estimation(foreground, in, gt);
     end
     [prec, rec, f1score] = performance_metrics(TPaccum, FPaccum, FNaccum);
 end

@@ -1,4 +1,4 @@
-function [ prec,rec,auc] = alpha_search( samples,SEQ, PATH, rho,seq_name,connectivity,  filling, opening, morpho)
+function [ prec,rec,auc] = alpha_search( samples,SEQ, PATH, rho,seq_name,connectivity,  filling, opening, morpho,se)
             MODELING_RATIO = 0.5;
             n_samples = int32( (SEQ(2) - SEQ(1)) * MODELING_RATIO );
             [meanP, varP] = gaussian_modeling(PATH, SEQ, n_samples, false);
@@ -7,7 +7,7 @@ function [ prec,rec,auc] = alpha_search( samples,SEQ, PATH, rho,seq_name,connect
             alpha = linspace(0.1, 5, samples);
             for i = 1 : samples
                     [TPaccum(i), FPaccum(i), FNaccum(i), TNaccum(i), prec(i), rec(i), f1score(i)] = ...
-                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, true, false,connectivity,  filling, opening, morpho);
+                        bg_estimation(PATH, SEQ, meanP, varP, n_samples, alpha(i), rho, true, false,connectivity,  filling, opening, morpho,se);
             end
             [valueR, idxR] = max(f1score);
             disp(sprintf('F1-score: %f -- Alpha: %f', valueR, alpha(idxR)));
