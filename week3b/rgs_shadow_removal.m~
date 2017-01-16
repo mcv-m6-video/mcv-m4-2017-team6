@@ -1,0 +1,12 @@
+function [ foreground ] = rgs_shadow_removal( observed, expected, foreground )
+%UNTITLED2 Summary of this function goes here
+%   Detailed explanation goes here
+
+    s = observed(:,:,1)+observed(:,:,2)+observed(:,:,3);
+    r = observed(:,:,1)/s(:,:);
+    g = observed(:,:,2)/s(:,:);
+    b = observed(:,:,3)/s(:,:);
+
+
+end
+
