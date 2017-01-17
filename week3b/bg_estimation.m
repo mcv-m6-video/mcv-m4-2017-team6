@@ -40,7 +40,7 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         
         if morpho %task3
             for j=1:size(aux_foreground,3)
-                aux_foreground(:,:,j) = imopen(aux_foreground(:,:,j), se);
+               % aux_foreground(:,:,j) = imopen(aux_foreground(:,:,j), se);
                 aux_foreground(:,:,j) = imclose(aux_foreground(:,:,j), se);
             end
         end

@@ -8,14 +8,25 @@ function [ output_args ] = task_1_2_3( dataset_path, task, conectivity, filling)
     PATH(1) = cellstr(strcat(dataset_path, 'baseline/highway/'));
     SEQ_NAME(1) = cellstr('HIGHWAY');
     RHO(1)=0.25;
+    opening(1)=100;
+    radius(1)=3;
+    s_element(1) = cellstr('square');
+    
     SEQ(2,:) = [1460, 1560];
     PATH(2) = cellstr(strcat(dataset_path, 'dynamicBackground/fall/'));
     SEQ_NAME(2) = cellstr('FALL');
     RHO(2)=0.052632;
+    opening(2)=800;
+    radius(2)=3;
+    s_element(2) = cellstr('diamond');
+    
     SEQ(3,:) = [950, 1050];
     PATH(3) = cellstr(strcat(dataset_path, 'cameraJitter/traffic/'));
     SEQ_NAME(3) = cellstr('TRAFFIC');
     RHO(3)= 0.157895;
+    opening(3)=300;
+    radius(3)=12;
+    s_element(3) = cellstr('square');
     
     for dataset=1:3
         if strcmp(task,'hole') %task1
@@ -28,18 +39,21 @@ function [ output_args ] = task_1_2_3( dataset_path, task, conectivity, filling)
                 [ prec(dataset,opening+1,:),rec(dataset,opening+1,:),auc(dataset,opening+1)]=alpha_search( INTERVALS, SEQ(dataset,:), cell2mat(PATH(dataset)),RHO(dataset),cell2mat(SEQ_NAME(dataset)), false, conectivity, filling, opening,false, false);
             end
         elseif strcmp(task,'morpho') %task3
-            list_se=[cellstr('diamond'), cellstr('octagon'),cellstr('square'),cellstr('sphere')];
-            step=100;
-            final=500;
-            for n_se=1:size(list_se,2)
-                for opening=0:step:final
-                    for R=3:3:20
-                        disp(strcat('Structral element: ',cell2mat(list_se(1,n_se)),' R: ', num2str(R), ' Opening: ',num2str(opening),' Conectivity: ',num2str(conectivity)));
-                        se = strel(cell2mat(list_se(1,n_se)),R);
-                        [ prec(dataset,:),rec(dataset,:),auc(dataset)]=alpha_search( INTERVALS, SEQ(dataset,:), cell2mat(PATH(dataset)),RHO(dataset),cell2mat(SEQ_NAME(dataset)),false, conectivity, filling, opening,true,se, false);
-                    end
-                end
-            end
+%             list_se=[cellstr('diamond'), cellstr('octagon'),cellstr('square'),cellstr('sphere')];
+%             step=100;
+%             final=1000;
+%             for n_se=1:size(list_se,2)
+%                 for opening=0:step:final
+%                     for R=3:3:20
+%                         disp(strcat('Structral element: ',cell2mat(list_se(1,n_se)),' R: ', num2str(R), ' Opening: ',num2str(opening),' Conectivity: ',num2str(conectivity)));
+%                         se = strel(cell2mat(list_se(1,n_se)),R);
+%                         [ prec(dataset,:),rec(dataset,:),auc(dataset)]=alpha_search( INTERVALS, SEQ(dataset,:), cell2mat(PATH(dataset)),RHO(dataset),cell2mat(SEQ_NAME(dataset)),false, conectivity, filling, opening,true,se, false);
+%                     end
+%                 end
+%             end
+              se = strel(cell2mat(s_element(dataset)),radius(dataset));
+              [ prec(dataset,:),rec(dataset,:),auc(dataset)]=alpha_search( INTERVALS, SEQ(dataset,:), cell2mat(PATH(dataset)),RHO(dataset),cell2mat(SEQ_NAME(dataset)),false, conectivity, filling, opening(dataset),true,se, false);
+
         elseif strcmp(task,'shadow') % task4
             [ prec(dataset,:),rec(dataset,:),auc(dataset)]=alpha_search( INTERVALS, SEQ(dataset,:), cell2mat(PATH(dataset)),RHO(dataset),cell2mat(SEQ_NAME(dataset)), true, 0, false, 0,false, NaN, true);
             [ prec_old(dataset,:),rec_old(dataset,:),auc_old(dataset)]=alpha_search( INTERVALS, SEQ(dataset,:), cell2mat(PATH(dataset)),RHO(dataset),cell2mat(SEQ_NAME(dataset)),false, 0, false, 0,false, NaN, false);
