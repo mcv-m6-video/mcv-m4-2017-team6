@@ -2,9 +2,9 @@ function [ output_args ] = optical_flow( past, current, debug )
 %OPTICAL_FLOW Summary of this function goes here
 %   Detailed explanation goes here
 
-    block_size = 30; % Typically 16x16 pixels
-    area_of_search = 30; % P pixels in every direction: (2P+N)x(2P+N) pixels. Typically P = N
-    compensation = 'fwd'; % options 'fwd' or 'bwd'
+    block_size = 8; % Typically 16x16 pixels
+    area_of_search = 8; % P pixels in every direction: (2P+N)x(2P+N) pixels. Typically P = N
+    compensation = 'bwd'; % options 'fwd' or 'bwd'
     % Forward: All pixels in the past image are associated to a  pixel in the current image
     % Backward: All pixels in the current image are associated to a pixel in the past image    
     
@@ -145,8 +145,8 @@ function [flow_row, flow_col] = block_matching(block, image, area_of_search, row
             % block information
             if diff < min_dist
                 min_dist = diff;
-                flow_row = row_position - row_block; % row flow vector
-                flow_col = col_position - col_block; % column flow vector
+                flow_row = row_block - row_position; % row flow vector
+                flow_col = col_block - col_position; % column flow vector
                 best_pos_row = row_block;
                 best_pos_col = col_block;
             end
