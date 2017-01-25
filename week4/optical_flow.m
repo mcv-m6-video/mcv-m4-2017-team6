@@ -144,6 +144,6 @@ function [flow_row, flow_col] = block_matching(block, image, area_of_search, row
         rectangle('Position',[best_pos_col, best_pos_row, block_size, block_size],'edgeColor','blue');
         waitforbuttonpress;
     end
-    [flow_row, flow_col]
+    [flow_row, flow_col];
 end
 
