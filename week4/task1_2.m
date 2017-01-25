@@ -15,7 +15,15 @@ function [ output_args ] = task1_2( debug )
     flow_result = optical_flow(image1, image2, block_size, area_of_search, compensation, debug);
     gt_flow = imread('../dataset_flow/training/flow_noc/000045_10.png');
     
-    [mse, pepn, error] = getError(gt_flow, flow_result);
+    [mse, pepn, error] = getError(gt_flow, flow_result(:,:,1), flow_result(:,:,2));
+    
+    [mse, pepn]
+    
+    % Now get the lucasKanade results
+    
+    [LKu, LKv] = LucasKanade(image1, image2);
+    
+    [mse, pepn, error] = getError(gt_flow, LKu, LKv);
     
     [mse, pepn]
 
