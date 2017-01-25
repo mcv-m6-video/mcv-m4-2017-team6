@@ -8,7 +8,7 @@ function [ output_args ] = task1_1( debug )
     
     b_sizes = [8 16 24 32 40 48];
     areas = [8 16 24 32 40 48];
-    compensation = 'bwd';
+    compensation = 'fwd';
     
     results = [];
     for bi = 1:length(b_sizes)
