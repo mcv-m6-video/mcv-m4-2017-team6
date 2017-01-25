@@ -1,13 +1,7 @@
-function [ output_args ] = optical_flow( past, current, debug )
+function [ flow ] = optical_flow( past, current, block_size, area_of_search, compensation, debug )
 %OPTICAL_FLOW Summary of this function goes here
 %   Detailed explanation goes here
 
-    block_size = 8; % Typically 16x16 pixels
-    area_of_search = 8; % P pixels in every direction: (2P+N)x(2P+N) pixels. Typically P = N
-    compensation = 'bwd'; % options 'fwd' or 'bwd'
-    % Forward: All pixels in the past image are associated to a  pixel in the current image
-    % Backward: All pixels in the current image are associated to a pixel in the past image    
-    
     % Dimensions of the images
     n_rows = size(past,1);
     n_cols = size(past,2);
@@ -57,20 +51,20 @@ function [ output_args ] = optical_flow( past, current, debug )
     end
     
     % Visualize optical flow with quiver
-    downsample = 10; % Show 1 optical flow vectors every 'downsample' pixels
-    for i=1:size(flow, 1)
-       for j=1:size(flow,2)
-           if(mod(j,downsample) ~= 0 || mod(i,downsample)~=0)
-               flow(i,j,1) = 0;
-               flow(i,j,2) = 0;
-           end
-       end
-    end
-    imshow(target);
-    hold on
-    quiver(1:size(flow,2), 1:size(flow,1), flow(:,:,1), flow(:,:,2),20);
-    set(gca,'Ydir','reverse')
-    hold off
+%     downsample = 10; % Show 1 optical flow vectors every 'downsample' pixels
+%     for i=1:size(flow, 1)
+%        for j=1:size(flow,2)
+%            if(mod(j,downsample) ~= 0 || mod(i,downsample)~=0)
+%                flow(i,j,1) = 0;
+%                flow(i,j,2) = 0;
+%            end
+%        end
+%     end
+%     imshow(target);
+%     hold on
+%     quiver(1:size(flow,2), 1:size(flow,1), flow(:,:,1), flow(:,:,2),20);
+%     set(gca,'Ydir','reverse')
+%     hold off
 
 end
 
@@ -91,21 +85,13 @@ function [flow_row, flow_col] = block_matching(block, image, area_of_search, row
     
     % We have tp Compare the given block restricting by area of search
     
-    % Get the center position of the block
-    row_center = floor(row_position+block_size/2);
-    col_center = floor(col_position+block_size/2);
-    
-    % how many blocks in each side of the current block to search for
-    % comparison
-    each_side = floor(area_of_search/block_size);
-    
     % Define the lower and upper bound of the search area in both
     % dimensions
-    lower_bound_rows = max(0, row_position-each_side*block_size);
-    lower_bound_cols = max(0, col_position-each_side*block_size);
+    lower_bound_rows = max(0, row_position-area_of_search);
+    lower_bound_cols = max(0, col_position-area_of_search);
     
-    upper_bound_rows = min(n_rows-block_size, row_position+each_side*block_size);
-    upper_bound_cols = min(n_cols-block_size, col_position+each_side*block_size);
+    upper_bound_rows = min(n_rows-block_size, row_position+area_of_search);
+    upper_bound_cols = min(n_cols-block_size, col_position+area_of_search);
     
     % To visualize the block matching algorithm
     if debug
@@ -122,7 +108,7 @@ function [flow_row, flow_col] = block_matching(block, image, area_of_search, row
     flow_col = 0;
     
     % Step of the sliding window that search for the matching block
-    step_window = 5;
+    step_window = 1;
     
     % Sliding window loop: compare given block against all possible blocks
     for row_block=lower_bound_rows:step_window:upper_bound_rows
