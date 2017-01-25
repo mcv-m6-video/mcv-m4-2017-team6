@@ -6,27 +6,29 @@ function [ output_args ] = task1_1( debug )
     image1 = imread('../dataset_flow/training/image_0/000045_10.png');
     image2 = imread('../dataset_flow/training/image_0/000045_11.png');
     
-    b_sizes = [8 16 32 40 50];
-    areas = [10 20];
-    compensation = 'fwd';
+    b_sizes = [8 16 24 32 40 48];
+    areas = [8 16 24 32 40 48];
+    compensation = 'bwd';
     
-    block_results = [];
+    results = [];
     for bi = 1:length(b_sizes)
         area_results = [];
         for ai = 1:length(areas)
             block_size = b_sizes(bi);
             area_of_search = areas(ai);
             
+            block_size, area_of_search
+            
             flow_result = optical_flow(image1, image2, block_size, area_of_search, compensation, debug);
             gt_flow = imread('../dataset_flow/training/flow_noc/000045_10.png');
 
-            [mse, pepn, error] = getError(gt_flow, flow_result);
+            % Get error function expects: ground_truth, u, v
+            [mmen, pepn, error] = getError(gt_flow, flow_result(:,:,1), flow_result(:,:,2));
 
-            [mse, pepn]
+            [mmen, pepn]
             
-            area_results = [pepn area_results]
+            results = [results ; mmen pepn];
         end
-        block_results = [area_results ; block_results]
     end
     
     
