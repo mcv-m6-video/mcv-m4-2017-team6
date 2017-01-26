@@ -18,8 +18,10 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
     for i = first : last
         in = imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg') );
 
-        if ~color
-            in = rgb2gray(in);
+        if ~color 
+            if size(in,3)>1
+                in = rgb2gray(in);
+            end
         else
             in = changeColorSpace(in);
             %in = cat(3, in(:,:,1), in(:, :,2));

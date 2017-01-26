@@ -4,9 +4,12 @@ function [ p_mean, p_var ] = gaussian_modeling(IN_PATH, sequence, n_samples, col
     
     IN_PATH = strcat(IN_PATH, 'input/');
     first = sequence(1);
-    last = first + n_samples;
-    
-    in = rgb2gray( imread(strcat(IN_PATH, 'in000001.jpg')) );
+    last = first + n_samples; 
+    in = ( imread(strcat(IN_PATH, 'in00', sprintf('%04d',first), '.jpg')) );
+    if size(in,3)>1
+          in = rgb2gray(in);
+    end
+   
     
     if color
         seq = zeros(size(in, 1), size(in, 2), 3, n_samples);
@@ -25,7 +28,10 @@ function [ p_mean, p_var ] = gaussian_modeling(IN_PATH, sequence, n_samples, col
         seq = zeros(size(in, 1), size(in, 2), n_samples);
         count = 1;
         for i = first : last
-            in = rgb2gray( imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg')) );
+            in = ( imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg')) );
+            if size(in,3)>1
+                in = rgb2gray(in);
+            end
             seq(:,:,count) = in(:,:);
             count = count + 1;
         end
