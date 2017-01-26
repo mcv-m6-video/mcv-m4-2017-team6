@@ -18,26 +18,12 @@ function [ ] = task2_1( )
         curr = rgb2gray( imread(strcat(seq_path, 'in00', sprintf('%04d',i+1), '.jpg')) );
         flow_result = optical_flow(past, curr, block_size, area_of_search, compensation, 0);   
         
-        [udir_accum,vdir_accum] = motion_compensation(flow_result(:,:,1), flow_result(:,:,1), ...
-                                                      udir_accum, vdir_accum);
+        [udir_accum,vdir_accum]=motion_compensation(flow_result(:,:,1), flow_result(:,:,1), udir_accum, vdir_accum);
         
-        crop = 40;
-        if udir_accum >= 0
-            xstart = crop - udir_accum;
-            xend = size(curr, 2) - crop + udir_accum;
-        else
-            xstart = crop - udir_accum;
-            xend = size(curr, 2) - crop + udir_accum;
-        end
-        
-        if vdir_accum >= 0
-            ystart = crop - vdir_accum;
-            yend = size(curr, 1) - crop + vdir_accum;
-        else
-            ystart = crop - vdir_accum;
-            yend = size(curr, 1) - crop + vdir_accum;
-        end
-        corrected = curr(ystart:yend, xstart:xend);
+        tform = affine2d( [1 0 0; 0 1 0; udir_accum vdir_accum, 1] );
+        corrected = imwarp(curr, tform);
+%         imshow(corrected);
+%         waitforbuttonpress;
         imwrite(corrected, strcat('traffic_corrected/', 'in00', sprintf('%04d',i), '.jpg'));
         
     end
