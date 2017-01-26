@@ -4,14 +4,21 @@ function [ ] = display_sequences( )
     ori_path = 'traffic_corrected/original/';
     corr_path = 'traffic_corrected/';
     seq_traffic = [950, 1050];
-
+    
+    outputVideo = VideoWriter('traffic_corrected/1_motion_compensation.avi');
+    outputVideo.FrameRate = 20;
+    open(outputVideo);
     
     for i = seq_traffic(1) : seq_traffic(2)-1
         ori = imread(strcat(ori_path, 'in00', sprintf('%04d',i), '.jpg'));
         corr = imread(strcat(corr_path, 'in00', sprintf('%04d',i), '.jpg'));
-        i
-        subplot(1,2,1), subimage(ori), title('Original')
-        subplot(1,2,2), subimage(corr), title('Motion compensation')
+        ori = ori(20:end-20, 20:end-20);
+        corr = corr(20:end-20, 20:end-20);
+        double_i = [ori,corr];
+        imshow(double_i);
+        
+        F = getframe;
+        writeVideo(outputVideo, F);
         pause(0.001);
     end
     

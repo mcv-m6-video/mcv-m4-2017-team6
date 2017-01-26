@@ -10,21 +10,24 @@ function [ ] = task2_1( )
     
     udir_accum = 0;
     vdir_accum = 0;
-    first = rgb2gray( imread(strcat(seq_path, 'in00', sprintf('%04d',1), '.jpg')) );
-    %imwrite(first,)
+    first = rgb2gray( imread(strcat(seq_path, 'in00', sprintf('%04d',950), '.jpg')) );
+    imwrite(first,strcat('traffic_corrected/', 'in00', sprintf('%04d',950), '.jpg'));
     for i = seq_traffic(1) : seq_traffic(2)-1
         i
         past = rgb2gray( imread(strcat(seq_path, 'in00', sprintf('%04d',i), '.jpg')) );
         curr = rgb2gray( imread(strcat(seq_path, 'in00', sprintf('%04d',i+1), '.jpg')) );
-        flow_result = optical_flow(past, curr, block_size, area_of_search, compensation, 0);   
+        flow_result = optical_flow(past, curr, block_size, area_of_search, compensation, 0);
+        %[u, v] = HS(past, curr, 1, 10, 0, 0, 0, 0);
         
-        [udir_accum,vdir_accum]=motion_compensation(flow_result(:,:,1), flow_result(:,:,1), udir_accum, vdir_accum);
+        %[udir_accum,vdir_accum]=motion_compensation(u, v, udir_accum, vdir_accum);
+        [udir_accum,vdir_accum]=motion_compensation(flow_result(:,:,2), flow_result(:,:,1), udir_accum, vdir_accum);
         
-        tform = affine2d( [1 0 0; 0 1 0; udir_accum vdir_accum, 1] );
-        corrected = imwarp(curr, tform);
+        %tform = affine2d( [1 0 0; 0 1 0; udir_accum vdir_accum, 1] );
+        %corrected = imwarp(curr, tform);
 %         imshow(corrected);
 %         waitforbuttonpress;
-        imwrite(corrected, strcat('traffic_corrected/', 'in00', sprintf('%04d',i), '.jpg'));
+        corrected = imtranslate(curr, [udir_accum, vdir_accum]);
+        imwrite(corrected, strcat('traffic_corrected/', 'in00', sprintf('%04d',i+1), '.jpg'));
         
     end
 
