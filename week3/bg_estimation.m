@@ -80,6 +80,8 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
             foreground = hsv_shadow_removal(in, meanP, foreground);
         end
         
+        %imwrite(foreground, strcat('foreground_results/compensated/', 'in00', sprintf('%04d',i), '.png') )
+        
         [TP, FP, FN, TN] = performance_pixel(foreground, gt);
         
         TPaccum = TPaccum + TP;
@@ -87,7 +89,7 @@ function [TPaccum, FPaccum, FNaccum, TNaccum, prec, rec, f1score] = ...
         FNaccum = FNaccum + FN;
         TNaccum = TNaccum + TN;
         
-       % plot_estimation(foreground, in, gt);
+        %plot_estimation(foreground, in, gt);
     end
     [prec, rec, f1score] = performance_metrics(TPaccum, FPaccum, FNaccum);
 end

@@ -3,12 +3,12 @@ function [ output_args ] = create_gif( input_args )
 %   Detailed explanation goes here
 
     %seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
-    seq_path = 'traffic_corrected_16_32_bwd/';
+    seq_path = 'gt_corrected/';
     
-    filename = 'gifs/16_32_bwd.gif'; % Specify the output file name
+    filename = 'gifs/gt_corrected.gif'; % Specify the output file name
 
     seq_traffic = [950, 1050];
-    first = imread(strcat(seq_path, 'in00', sprintf('%04d',950), '.jpg'));
+    first = imread(strcat(seq_path, 'gt00', sprintf('%04d',950), '.png'));
     if length(size(first)) == 3
         first = rgb2gray( first );
     end
@@ -17,7 +17,7 @@ function [ output_args ] = create_gif( input_args )
     imwrite(first,filename,'gif','LoopCount',Inf,'DelayTime',0);
     
     for i = seq_traffic(1)+1 : seq_traffic(2)
-        im = imread(strcat(seq_path, 'in00', sprintf('%04d',i), '.jpg'));
+        im = imread(strcat(seq_path, 'gt00', sprintf('%04d',i), '.png'));
         
         if length(size(im)) == 3
             im = rgb2gray( im );

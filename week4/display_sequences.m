@@ -1,11 +1,11 @@
 function [ ] = display_sequences( )
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
-    ori_path = 'traffic_corrected/original/';
-    corr_path = 'traffic_corrected/';
+    ori_path = 'traffic_dataset/input/original/';
+    corr_path = 'traffic_dataset/input/';
     seq_traffic = [950, 1050];
     
-    outputVideo = VideoWriter('traffic_corrected/1_motion_compensation.avi');
+    outputVideo = VideoWriter('traffic_dataset/1_motion_compensation.avi');
     outputVideo.FrameRate = 20;
     open(outputVideo);
     
