@@ -2,7 +2,6 @@ function [ p_mean, p_var ] = background_modeling(IN_PATH, sequence, n_samples, c
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
     
-    IN_PATH = strcat(IN_PATH, 'input/');
     first = sequence(1);
     last = first + n_samples; 
     in = ( imread(strcat(IN_PATH, 'in00', sprintf('%04d',first), '.jpg')) );
@@ -10,7 +9,6 @@ function [ p_mean, p_var ] = background_modeling(IN_PATH, sequence, n_samples, c
           in = rgb2gray(in);
     end
    
-    
     if color
         seq = zeros(size(in, 1), size(in, 2), 3, n_samples);
         count = 1;
