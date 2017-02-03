@@ -11,19 +11,20 @@ function videoToImage( videoPath )
     shuttleVideo = VideoReader(videoPath);
 
     ii = 1;
-
+    j=1;
     while hasFrame(shuttleVideo)
        img = readFrame(shuttleVideo);
-       filename = [sprintf('%03d',ii) '.jpg'];
+       filename = ['in00' sprintf('%04d',j) '.jpg'];
        fullname = fullfile(workingDir,'images',filename);
-       img = imcrop(img,[440,328,600, 400]);
-       imshow(img)
-       
-       waitforbuttonpress
-        waitforbuttonpress
-         waitforbuttonpress
-          waitforbuttonpress
-       %imwrite(img,fullname)    % Write out to a JPEG file (img1.jpg, img2.jpg, etc.)
+       %img = imcrop(img,[436,342,1041, 738]); GOPRO
+       img = imresize(img(425:1080,410:1528,:),0.5);
+%        imshow(img)
+%       
+%        pause(0.0000001)
+       if ii>15 && (ii<1415 || ii>1740)
+           imwrite(img,fullname)    % Write out to a JPEG file (img1.jpg, img2.jpg, etc.)
+           j = j+1;
+       end
        ii = ii+1;
     end
 end
