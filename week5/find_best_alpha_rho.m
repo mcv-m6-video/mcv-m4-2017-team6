@@ -1,9 +1,14 @@
 function [ output_args ] = find_best_alpha_rho( input_args )
 %TASK1_1 Summary of this function goes here
 %   Detailed explanation goes here
-    seq_path = '../dataset2014/dataset/baseline/highway/input/';
-    GT_PATH = strcat('../dataset2014/dataset/baseline/highway/', 'groundtruth/');
-    SEQ = [1050, 1350];
+%     seq_path = '../dataset2014/dataset/baseline/highway/input/';
+%     GT_PATH = strcat('../dataset2014/dataset/baseline/highway/', 'groundtruth/');
+%     SEQ = [1050, 1350];
+    
+    % TRAFFIC STABILIZED
+    seq_path = '../week4/traffic_dataset/input/';
+    GT_PATH = strcat('../week4/traffic_dataset/', 'groundtruth/')
+    SEQ = [950, 1050];
     
     % We start by modeling the background
     model = {};
@@ -15,21 +20,22 @@ function [ output_args ] = find_best_alpha_rho( input_args )
     model.n_samples = n_samples;
     model.meanP = meanP;
     model.varP = varP;
+    model.ignoreblack = true;
     
     % parameters for foreground detection
-    model.opening = 0; % 1000
-    model.morpho = false;
-    model.se = strel('octagon',18);
+    model.opening = 30; % 1000
+    model.morpho = true;
+    model.se = strel('square',3);
     model.adaptative = true;
     model.shadow = false;
-    model.filling = false;
+    model.filling = true;
     model.connectivity = 4;
     
     %SEARCH = 'ALPHA_SEARCH';
     SEARCH = 'GRID_SEARCH';
     switch SEARCH
         case 'GRID_SEARCH'
-            samples = 5;
+            samples = 7;
             disp('PARAMS GRID SEARCH -- BACKGROUND ESTIMATION');
             alpha = linspace(0, 5, samples);
             rho = linspace(0, 1, samples);
@@ -104,9 +110,9 @@ function [prec, rec, f1score, model] = get_scores(seq_path, GT_PATH, model, SEQ)
 
         [segmentation, model] = foreground_detection(frame, model);
 
-        to_show = [frame, uint8(segmentation)*255];
-        imshow(to_show);
-        pause(0.000001);
+%         to_show = [frame, uint8(segmentation)*255];
+%         imshow(to_show);
+%         pause(0.000001);
 
         [TP, FP, FN, TN] = performance_pixel(segmentation, gt);
 

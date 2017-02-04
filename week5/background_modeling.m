@@ -28,14 +28,22 @@ function [ p_mean, p_var ] = background_modeling(IN_PATH, sequence, n_samples, c
             in = ( imread(strcat(IN_PATH, 'in00', sprintf('%04d',i), '.jpg')) );
             if size(in,3)>1
                 in = rgb2gray(in);
-            end
+            end 
+
+            % Set completely black pixels to NaN to ignore them when
+            % computing mean and variance
+            count_black = in == 0;
+            in(count_black) = NaN;
+            
             seq(:,:,count) = in(:,:);
             count = count + 1;
         end
 
-        p_mean = mean(seq, 3);
-        p_var = var(seq, 0, 3);
+        p_mean = nanmean(seq, 3);
+        p_var = nanvar(seq, 0, 3);
     end
+    
+    
     
     % (DEBUG) View mean and variance to assess that they have been computed right
     if false

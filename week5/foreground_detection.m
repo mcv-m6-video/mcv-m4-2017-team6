@@ -16,6 +16,14 @@ function [ segmentation, model ] = foreground_detection( frame, model )
 
     in = double(in);
     aux_foreground = abs(in - model.meanP) >= (model.alpha * (sqrt(model.varP) + 2.0));
+    
+    % We can choose to ignore completely black pixels from the image
+    % because they are mostly result of stabilization
+    % so we can't say that a pixel is foreground if its completely black
+    if model.ignoreblack
+       are_black = in == 0;
+       aux_foreground(are_black) = 0;
+    end
 
     if model.opening > 0 % Perform opening to improve results
         for j=1:size(aux_foreground,3)
@@ -44,10 +52,18 @@ function [ segmentation, model ] = foreground_detection( frame, model )
 
     if model.adaptative
         % Update mean and variance (Adaptative model)
-        model.meanP(~foreground) = model.rho*in(~foreground) + ...
-                            (1 - model.rho)*model.meanP(~foreground);
-        model.varP(~foreground) = model.rho*(in(~foreground) - model.meanP(~foreground)).^2 + ...
-                            (1 - model.rho)*model.varP(~foreground);
+        update_mask = ~foreground;
+        
+        % we can ignore black pixels (caused by stabilization) when 
+        % adapting the model
+        if model.ignoreblack
+            update_mask(are_black) = 0;
+        end
+        
+        model.meanP(update_mask) = model.rho*in(update_mask) + ...
+                            (1 - model.rho)*model.meanP(update_mask);
+        model.varP(update_mask) = model.rho*(in(update_mask) - model.meanP(update_mask)).^2 + ...
+                            (1 - model.rho)*model.varP(update_mask);
     end
 
     if model.shadow %task4
