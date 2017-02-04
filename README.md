@@ -1,7 +1,14 @@
-# mcv-m4-2017-team6
+## Overview
+In this project we propose a video surveillance system which is able to count the amount of vehicles passing by the road and predict its speed. Computer vision systems are cheaper than RADAR based traffic monitoring systems; they require a simpler and cheaper hardware. The main tradeoff is that the algorithm are more complex, thus, the development cycle is longer and the workload is higher. Nowadays, we can find affordable cameras with reliable hardware, therefore, the computer vision algorithms are capable of running in real time eventhough the amount of workload.
 
-Week1
-Task 1 dataset: 
-http://wordpress-jodoin.dmi.usherb.ca/static/dataset/baseline/highway.zip
-Extract the dataset in the folder "highway" in the root of the project.
-Download the Results from Campus Virtual: http://aules.uab.cat/2016-17/pluginfile.php/207150/mod_page/content/32/results_testAB_changedetection.zip and extract them to a folder "results".
+## Technology
+### Background substraction
+
+### Video Stabilization
+
+### Object tracking and speed estimation
+
+## Results
+
+## Resources
+Slides, link to code...., paper
