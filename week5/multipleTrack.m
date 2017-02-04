@@ -1,33 +1,24 @@
-function [ output_args ] = multipleTrack( seq_path, model )
+function [ output_args ] = multipleTrack( model )
 %multipleTrack Summary of this function goes here
 %   Detailed explanation goes here
     
     obj = setupSystemObjects();
     tracks = initializeTracks(); % Create an empty array of tracks.
+    saved_tracks = initializeTracks(); % Create an empty array of saved tracks.
     nextId = 1; % ID of the next track
-    oldTracks = tracks;
     cont = 0;
     
-    pix_metr = 0.109649;
-    fps = 30.0;
-    
-    
-    aux = [219 1; 275 1; 1 204; 254 204]; %highway
-    aux = [246 1; 342 1; 68 328; 499 328]; %uab
+    pix_metr = model.pix_metr;
+    fps = model.fps;
     
     dest = [1 1; 400 1; 1 400; 400 400];
+    
+    % compute transformation for homography projection
+    tform = homo(model.aux, dest); 
     for i = model.TRACK_SEQ(1) : model.TRACK_SEQ(2)
        oldTracks = tracks;
-       frame = rgb2gray( imread(strcat(seq_path, 'in00', sprintf('%04d',i), '.jpg')) );
-       [segmentation, model] = foreground_detection(frame, model);
-       frame = homo(frame, aux, dest);
-       segmentation = homo(segmentation, aux, dest);
-       
-       
-       
-       %to_show = [frame, uint8(segmentation)*255];
-       
-       
+       frame = rgb2gray( imread(strcat(model.seq_path, 'in00', sprintf('%04d',i), '.jpg')) );
+       [segmentation, model] = foreground_detection(frame, model);   
        
        % Begin object tracking
        [centroids, bboxes, mask] = detectObjects(segmentation);
@@ -46,26 +37,35 @@ function [ output_args ] = multipleTrack( seq_path, model )
         displayTrackingResults();
        
 %        imshow(frame);
-%        pause(0.000001);
+        pause(0.01);
        
-        
         for j=1:size(tracks,2)
            for k=1:size(oldTracks,2)
               if tracks(j).id == oldTracks(k).id
-                 real_metr = double((tracks(j).bbox(2)+tracks(j).bbox(4))-(oldTracks(k).bbox(2)+oldTracks(k).bbox(4)));
+                  
+                 center_x = double(tracks(j).bbox(1))+double(tracks(j).bbox(3))/2;
+                 center_y = double(tracks(j).bbox(2))+double(tracks(j).bbox(4))/2;
+                 [current_x,current_y] = transformPointsForward(tform,center_x,center_y);
+                 center_x = double(oldTracks(k).bbox(1))+double(oldTracks(k).bbox(3))/2;
+                 center_y = double(oldTracks(k).bbox(2))+double(oldTracks(k).bbox(4))/2;
+                 [old_x,old_y] = transformPointsForward(tform,center_x, center_y);
+                  
+                 %real_metr = double((tracks(j).bbox(2)+tracks(j).bbox(4))-(oldTracks(k).bbox(2)+oldTracks(k).bbox(4)));real_km_h
+                 real_metr = current_y - old_y;
                  real_metr = real_metr * pix_metr/(1/fps);
                  real_km = real_metr/1000;
                  real_km_h = real_km * 3600;
                    
-                 tracks(j).vel = oldTracks(k).vel*0.80 +  real_km_h*0.20;
+                 %tracks(j).vel = oldTracks(k).vel*0.90 +  real_km_h*0.10;
+                 tracks(j).vel = tracks(j).vel+real_km_h;
+                 tracks(j).mvel = tracks(j).vel / tracks(j).age;
+                 
               end
            end
         end
         
-        
         cont = cont+1;
     end
-
 
 %% Auxiliar functions
     function obj = setupSystemObjects()
@@ -163,6 +163,7 @@ function [ output_args ] = multipleTrack( seq_path, model )
             'kalmanFilter', {}, ...
             'age', {}, ...
             'vel', {}, ...
+            'mvel', {}, ...
             'totalVisibleCount', {}, ...
             'consecutiveInvisibleCount', {});
     end
@@ -285,6 +286,8 @@ function [ output_args ] = multipleTrack( seq_path, model )
             [tracks(:).consecutiveInvisibleCount] >= invisibleForTooLong;
         
         % Delete lost tracks.
+        saveInds = (ages > 10) & lostInds;
+        saved_tracks = [saved_tracks, tracks(saveInds)];
         tracks = tracks(~lostInds);
     end
 
@@ -313,6 +316,7 @@ function [ output_args ] = multipleTrack( seq_path, model )
                 'kalmanFilter', kalmanFilter, ...
                 'age', 1, ...
                 'vel', 0, ...
+                'mvel', 0, ...
                 'totalVisibleCount', 1, ...
                 'consecutiveInvisibleCount', 0);
             
@@ -352,7 +356,7 @@ function [ output_args ] = multipleTrack( seq_path, model )
                 
                 % Get ids.
                 ids = int32([reliableTracks(:).id]);
-                vels = int32([reliableTracks(:).vel]);
+                vels = int32([reliableTracks(:).mvel]);
                 
                 % Create labels for objects indicating the ones for 
                 % which we display the predicted rather than the actual 

@@ -1,12 +1,6 @@
-function [ img ] = homo( img, orig )
+function [ tform ] = homo(orig, dest)
 %UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here       
-    dest = [1 1; 400 1; 1 400; 400 400];
-    
+%   Detailed explanation goes here    
     tform = fitgeotrans(orig, dest, 'projective');
-    img = imwarp(img, tform);
-   
-    
-    %img = img(:, 955:1467);
 end
 
