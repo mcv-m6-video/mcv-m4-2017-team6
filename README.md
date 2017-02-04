@@ -21,3 +21,6 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 
 ## Resources
 Slides, link to code...., paper
+
+
+<img src="images/uno.gif" alt="hi" class="inline"/>
