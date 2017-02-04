@@ -2,9 +2,16 @@
 In this project we propose a video surveillance system which is able to count the amount of vehicles passing by the road and predict its speed. Computer vision systems are cheaper than RADAR based traffic monitoring systems; they require a simpler and cheaper hardware. The main tradeoff is that the algorithm are more complex, thus, the development cycle is longer and the workload is higher. Nowadays, we can find affordable cameras with reliable hardware, therefore, the computer vision algorithms are capable of running in real time eventhough the amount of workload.
 
 ## Technology
-### Background substraction
+In order to achive our goals we need to use different techniques such as back substraction, mathematical morphology, video compensation and object tracking.
+### Background Substraction
+The background substraction is used to segment the cars. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarions.
 
-### Video Stabilization
+(foto segmentation)
+
+[Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
+
+### Video Compensation
+
 
 ### Object tracking and speed estimation
 
