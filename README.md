@@ -11,6 +11,9 @@ The background substraction is used to segment the cars. We have used a single g
 [Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
 
 ### Video Compensation
+Video compensation plays an important role. Usually the cameras are placed in poles or signs and due to wind or other factors they suffer from vibrations. Having a jittery sequence makes the algorithms less robust; so it is important to process the video to generate a smooth sequence.
+
+To compensate the video we use Optical Flow obtained with the block matching algorithm
 
 
 ### Object tracking and speed estimation
