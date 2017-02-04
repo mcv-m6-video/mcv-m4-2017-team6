@@ -3,12 +3,11 @@ In this project we propose a video surveillance system which is able to count th
 
 ## Technology
 In order to achive our goals we need to use different techniques such as back substraction, mathematical morphology, video compensation and object tracking.
+
 ### Background Substraction
 The background substraction is used to segment the cars. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarions.
 
 (foto segmentation)
-
-[Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
 
 ### Video Compensation
 Video compensation plays an important role. Usually the cameras are placed in poles or signs and due to wind or other factors they suffer from vibrations. Having a jittery sequence makes the algorithms less robust; so it is important to process the video to generate a smooth sequence.
