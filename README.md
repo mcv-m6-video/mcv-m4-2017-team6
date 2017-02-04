@@ -4,8 +4,13 @@ In this project we propose a video surveillance system which is able to count th
 ## Technology
 In order to achive our goals we need to use different techniques such as back substraction, mathematical morphology, video compensation and object tracking.
 
+[Introduction Slides](https://drive.google.com/open?id=1EpXqcSMzcNrI2JHYW7SY0vbjkVu3XePuod6_q5ot_Mc).
+
 ### Background Substraction
 The background substraction is used to segment the cars. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarions.
+
+[Background Substraction Slides](https://drive.google.com/open?id=1dnUurtSCDUBepMk8pSRPdSBtiIqZMii968DKXVGQXg0).
+
 
 (foto segmentation)
 
@@ -16,8 +21,11 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 
 <img src="images/compare_compensation.gif" alt="hi" class="inline"/>
 
+[Video Compensation Slides](https://drive.google.com/open?id=1qVJnOOqmPPlsL1DYmORwB7VqqbGexh3oYGV6hWjTOxc).
 
 ### Object tracking and speed estimation
+
+[Object tracking and speed estimation Slides](https://drive.google.com/open?id=1qVJnOOqmPPlsL1DYmORwB7VqqbGexh3oYGV6hWjTOxc).
 
 ## Results
 
