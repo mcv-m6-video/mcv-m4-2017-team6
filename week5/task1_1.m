@@ -3,9 +3,9 @@ function [ output_args ] = task1_1( input_args )
 %   Detailed explanation goes here
 
     % HIGHWAY
-%     seq_path = '../dataset2014/dataset/baseline/highway/input/';
-%     SEQ = [1050, 1350];
-%     TRACK_SEQ = [1, 1700];
+    seq_path = '../dataset2014/dataset/baseline/highway/input/';
+    SEQ = [1050, 1350];
+    TRACK_SEQ = [1, 1700];
     
     % TRAFFIC
 %     seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
@@ -14,8 +14,10 @@ function [ output_args ] = task1_1( input_args )
     
     % TRAFFIC STABILIZED
 %     seq_path = '../week4/traffic_dataset/input/';
+%     %SEQ = [950, 1050];
 %     SEQ = [950, 1050];
 %     TRACK_SEQ = [1, 1570];
+%     %TRACK_SEQ = SEQ;
 
     % UAB
     seq_path = 'trafficUAB/images/';
@@ -28,6 +30,7 @@ function [ output_args ] = task1_1( input_args )
     model.color = false;
     model.SEQ = SEQ;
     model.TRACK_SEQ = TRACK_SEQ;
+    model.ignoreblack = 1;
     
     n_samples = int32( (SEQ(2) - SEQ(1)) * model.modeling_ratio );
     [meanP, varP] = background_modeling(seq_path, SEQ, n_samples, model.color);
@@ -36,8 +39,8 @@ function [ output_args ] = task1_1( input_args )
     model.varP = varP;
     
     % parameters for foreground detection
-    model.alpha = 3; %3.75;
-    model.rho = 0.1; % 0.15;
+    model.alpha = 2.5; %3; %3.75;
+    model.rho = 0.05; % 0.1; % 0.15;
     %model.rho = 0.10; % FOR UAB
     model.opening = 30; % 1000
     model.morpho = true;
