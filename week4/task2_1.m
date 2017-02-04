@@ -3,7 +3,7 @@ function [ ] = task2_1( generate_gt)
 %   Detailed explanation goes here
     seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
     %seq_traffic = [950, 1050];
-    seq_traffic = [1, 1570];
+    seq_traffic = [734, 1570];
     
     block_size = 16; % Typically 16x16 pixels
     area_of_search = 16; % P pixels in every direction: (2P+N)x(2P+N) pixels. Typically P = N
