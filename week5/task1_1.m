@@ -8,9 +8,9 @@ function [ output_args ] = task1_1( input_args )
 %     TRACK_SEQ = [1, 1700];
     
     % TRAFFIC
-    seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
-    SEQ = [950, 1050];
-    TRACK_SEQ = [1, 1570];
+%     seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
+%     SEQ = [950, 1050];
+%     TRACK_SEQ = [1, 1570];
     
     % TRAFFIC STABILIZED
 %     seq_path = '../week4/traffic_dataset/input/';
@@ -18,9 +18,9 @@ function [ output_args ] = task1_1( input_args )
 %     TRACK_SEQ = [1, 1570];
 
     % UAB
-%     seq_path = 'trafficUAB/images/';
-%     SEQ = [1, 300];
-%     TRACK_SEQ = [1, 1716];
+    seq_path = 'trafficUAB/images/';
+    SEQ = [1, 300];
+    TRACK_SEQ = [1, 1716];
     
     % We start by modeling the background
     model = {};
