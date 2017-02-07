@@ -9,6 +9,8 @@ This first step aims to segment the moving objects in the image; this is done by
 
 We filtered the segmented image using morphological operators. By doing so we are able to remove the noise of the image as well as small artifacts. The experiments that we carried out to determine the best paramets of the segmenatation and morphology are shown in the *Project Slides* in the Resources section.
 
+In the following figures we have a comparison doing segmentation with and without morphology. The results show two diferent frames from two of the sequences that we worked with. 
+
 
 <img src="images/comparison_morpho.png" alt="hi" class="inline"/>
 
@@ -26,6 +28,7 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 
 
 ## Results
+
 
 ## Resources
 * [Project Slides](https://docs.google.com/presentation/d/1YJnj8e_IcnCdWf5vRDw2Jt1kaXgdwhmclmG2308rm10/edit#slide=id.g20d2e7dda2_0_134).
