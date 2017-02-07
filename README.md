@@ -4,8 +4,11 @@ In this project we propose a video surveillance system which is able to count th
 ## Technology
 In order to achive our goals we need to use different techniques such as back substraction, mathematical morphology, video compensation and object tracking.
 
-### Background Substraction
-The background substraction is used to segment the moving objects. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarions. More details on the experiments that we carried out in order to determine the best value of alpha and rho are shown in the *Project Slides* in the Resources section.
+### Background Estimation and Foreground Segmentation
+This first step aims to segment the moving objects in the image; this is done by creating a statistical model of the background. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarios. 
+
+We filtered the segmented image using morphological operators. By doing so we are able to remove the noise of the image as well as small artifacts. The experiments that we carried out to determine the best paramets of the segmenatation and morphology are shown in the *Project Slides* in the Resources section.
+
 
 (foto segmentation)
 
@@ -32,13 +35,13 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 * [Dataset](http://www.changedetection.net/)
 
 ## Authors
-Guillem Cucurull [Github](https://github.com/gcucurull)
+* Guillem Cucurull [Github](https://github.com/gcucurull)
 
-Arnau Baró [Github](https://github.com/arbamas)
+* Arnau Baró [Github](https://github.com/arbamas)
 
-Pau Cebrian [Github](https://github.com/paucebr)
+* Pau Cebrian [Github](https://github.com/paucebr)
 
-Victor Campmany [Github](https://github.com/vcampmany)
+* Victor Campmany [Github](https://github.com/vcampmany)
 
 
 <img src="images/uno.gif" alt="hi" class="inline"/>
