@@ -14,7 +14,7 @@ Video compensation plays an important role. Usually the cameras are placed in po
 
 To compensate the video we use Optical Flow obtained with the block matching algorithm. The following sequence shows the difference of using video compensation and not using it. In  the two right images we can see the sequence and the sequence of the original video; and in the two left image we have the same sequences using video compensation. We can observe that the segmentation results are better.
 
-<div style="text-align:center"><img src="images/compare_compensation.gif" alt="hi" class="inline"/>
+<img src="images/compare_compensation.gif" alt="hi" class="inline"/>
 
 ### Object tracking and speed estimation
 
@@ -30,6 +30,15 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 * [Project Paper(under construction)]()
 
 * [Dataset](http://www.changedetection.net/)
+
+## Authors
+@gcucurull
+
+@arbamas
+
+@vcampmany
+
+@paucebr
 
 
 <img src="images/uno.gif" alt="hi" class="inline"/>
