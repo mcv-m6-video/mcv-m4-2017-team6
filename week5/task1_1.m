@@ -4,34 +4,42 @@ function [ output_args ] = task1_1( input_args )
 
     model = {};
     
-    % HIGHWAY
-    model.seq_path = '../dataset2014/dataset/baseline/highway/input/';
-    model.SEQ = [1050, 1350];
-    model.TRACK_SEQ = [1, 1700];
-    model.aux = [219 1; 275 1; 1 204; 254 204];
-    model.pix_metr = 0.5;
-    model.fps = 30.0;
-    
-    % TRAFFIC
-%     model.seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
-%     model.SEQ = [950, 1050];
-%     model.TRACK_SEQ = [1, 1570];
-    
-    % TRAFFIC STABILIZED
-%     model.seq_path = '../week4/traffic_dataset/input/';
-%     %SEQ = [950, 1050];
-%     model.SEQ = [950, 1050];
-%     model.TRACK_SEQ = [1, 1570];
-%     %TRACK_SEQ = SEQ;
-
-    % UAB
-%     model.seq_path = 'trafficUAB/images/';
-%     model.SEQ = [1, 300];
-%     model.TRACK_SEQ = [1, 1716];
-%     model.aux = [246 1; 342 1; 68 328; 499 328];
-%     model.pix_metr = 0.109649;
-%     model.fps = 30.0;
-    
+    run = 'HIGHWAY';
+    switch run
+        case 'HIGHWAY'
+            % HIGHWAY
+            model.seq_path = '../dataset2014/dataset/baseline/highway/input/';
+            model.SEQ = [1050, 1350];
+            model.TRACK_SEQ = [1, 1700];
+            model.aux = [219 1; 275 1; 1 204; 254 204];
+            model.pix_metr = 0.5;
+            model.fps = 30.0;
+            model.save_gif = 'gifs/highway';
+        case 'TRAFFIC'
+            % TRAFFIC
+            model.seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
+            model.SEQ = [1, 1570];
+            model.TRACK_SEQ = [1, 1570];
+            % TRAFFIC STABILIZED
+%             model.seq_path = '../week4/traffic_dataset/input/';
+%             SEQ = [950, 1050];
+%             model.SEQ = [1, 1570];
+%             model.TRACK_SEQ = [1, 1570];
+            model.aux = [246 1; 342 1; 68 328; 499 328]; % NOT THE REAL ONE
+            model.pix_metr = 0.109649; % NOT THE REAL ONE
+            model.fps = 30.0; % NOT THE REAL ONE
+            model.save_gif = 'gifs/traffic';
+        case 'UAB'
+            % UAB
+            model.seq_path = 'trafficUAB/images/';
+            model.SEQ = [1, 300];
+            model.TRACK_SEQ = [1, 1716];
+            model.aux = [246 1; 342 1; 68 328; 499 328];
+            model.pix_metr = 0.109649;
+            model.fps = 30.0;
+            model.save_gif = 'gifs/uab';
+    end
+        
     % We start by modeling the background
     model.modeling_ratio = 0.5;
     model.color = false;
@@ -47,7 +55,7 @@ function [ output_args ] = task1_1( input_args )
     model.alpha = 3.75; %3; %3.75;
     model.rho = 0.1; % 0.1; % 0.15;
     %model.rho = 0.10; % FOR UAB
-    model.opening = 30; % 1000
+    model.opening = 10; % 1000
     model.morpho = true;
     model.se = strel('square',3);
     model.adaptative = true;

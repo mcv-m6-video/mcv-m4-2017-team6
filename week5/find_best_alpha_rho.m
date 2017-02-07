@@ -6,9 +6,15 @@ function [ output_args ] = find_best_alpha_rho( input_args )
 %     SEQ = [1050, 1350];
     
     % TRAFFIC STABILIZED
-    seq_path = '../week4/traffic_dataset/input/';
-    GT_PATH = strcat('../week4/traffic_dataset/', 'groundtruth/')
+%     seq_path = '../week4/traffic_dataset/input/';
+%     GT_PATH = strcat('../week4/traffic_dataset/', 'groundtruth/')
+%     SEQ = [950, 1050];
+    
+    % TRAFFIC
+    seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
+    GT_PATH = strcat('../dataset2014/dataset/cameraJitter/traffic/', 'groundtruth/')
     SEQ = [950, 1050];
+    
     
     % We start by modeling the background
     model = {};
@@ -35,7 +41,7 @@ function [ output_args ] = find_best_alpha_rho( input_args )
     SEARCH = 'GRID_SEARCH';
     switch SEARCH
         case 'GRID_SEARCH'
-            samples = 7;
+            samples = 20;
             disp('PARAMS GRID SEARCH -- BACKGROUND ESTIMATION');
             alpha = linspace(0, 5, samples);
             rho = linspace(0, 1, samples);

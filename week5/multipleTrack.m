@@ -66,6 +66,10 @@ function [ output_args ] = multipleTrack( model )
         
         cont = cont+1;
     end
+    
+    % Here the model has stopped seeing frames, but there are still cars on
+    % the frame which has not been counted, we must process them;
+    processFinal();
 
 %% Auxiliar functions
     function obj = setupSystemObjects()
@@ -77,6 +81,11 @@ function [ output_args ] = multipleTrack( model )
         % and one to display the foreground mask.
         obj.videoPlayer = vision.VideoPlayer('Position', [20, 400, 700, 400]);
         obj.maskPlayer = vision.VideoPlayer('Position', [740, 400, 700, 400]);
+        
+        obj.videoWriter = VideoWriter(strcat(model.save_gif, '_frames.avi'));
+        open(obj.videoWriter);
+        obj.maskWriter = VideoWriter(strcat(model.save_gif, '_mask.avi'));
+        open(obj.maskWriter);
 
         % Create System objects for foreground detection and blob analysis
 
@@ -85,8 +94,8 @@ function [ output_args ] = multipleTrack( model )
         % of 1 corresponds to the foreground and the value of 0 corresponds
         % to the background.
 
-        obj.detector = vision.ForegroundDetector('NumGaussians', 3, ...
-            'NumTrainingFrames', 40, 'MinimumBackgroundRatio', 0.7);
+%         obj.detector = vision.ForegroundDetector('NumGaussians', 3, ...
+%             'NumTrainingFrames', 40, 'MinimumBackgroundRatio', 0.7);
 
         % Connected groups of foreground pixels are likely to correspond to moving
         % objects.  The blob analysis System object is used to find such groups
@@ -95,13 +104,25 @@ function [ output_args ] = multipleTrack( model )
 
         obj.blobAnalyser = vision.BlobAnalysis('BoundingBoxOutputPort', true, ...
             'AreaOutputPort', true, 'CentroidOutputPort', true, ...
-            'MinimumBlobArea', 400);
+            'MinimumBlobArea', 300);
     end
     
     function [centroids, bboxes, mask] = detectObjects( mask )
 
         % Perform blob analysis to find connected components.
-        [~, centroids, bboxes] = obj.blobAnalyser.step(mask);
+        [areas, centroids, bboxes] = obj.blobAnalyser.step(mask);
+        
+        ratios = [];
+        for a=1:size(areas)
+           ratio = double(areas(a)) / double(bboxes(a,3)*bboxes(a,4));
+           ratios = [ratios; ratio];
+        end
+        
+        if ~isempty(ratios)
+           keep = ratios > 0.3;
+           centroids = centroids(keep, :);
+           bboxes = bboxes(keep, :);
+        end
     end
 
 %% Predict New Locations of Existing Tracks
@@ -164,6 +185,7 @@ function [ output_args ] = multipleTrack( model )
             'age', {}, ...
             'vel', {}, ...
             'mvel', {}, ...
+            'positions', {}, ...
             'totalVisibleCount', {}, ...
             'consecutiveInvisibleCount', {});
     end
@@ -213,7 +235,7 @@ function [ output_args ] = multipleTrack( model )
         end
         
         % Solve the assignment problem.
-        costOfNonAssignment = 20;
+        costOfNonAssignment = 10;
         [assignments, unassignedTracks, unassignedDetections] = ...
             assignDetectionsToTracks(cost, costOfNonAssignment);
     end
@@ -240,6 +262,8 @@ function [ output_args ] = multipleTrack( model )
             % Replace predicted bounding box with detected
             % bounding box.
             tracks(trackIdx).bbox = bbox;
+            
+            tracks(trackIdx).positions = [tracks(trackIdx).positions; centroid];
             
             % Update track's age.
             tracks(trackIdx).age = tracks(trackIdx).age + 1;
@@ -317,6 +341,7 @@ function [ output_args ] = multipleTrack( model )
                 'age', 1, ...
                 'vel', 0, ...
                 'mvel', 0, ...
+                'positions', [centroid], ...
                 'totalVisibleCount', 1, ...
                 'consecutiveInvisibleCount', 0);
             
@@ -361,7 +386,7 @@ function [ output_args ] = multipleTrack( model )
                 % Create labels for objects indicating the ones for 
                 % which we display the predicted rather than the actual 
                 % location.
-                labels = cellstr(strcat(int2str(ids'), ' - ', int2str(vels')));
+                labels = cellstr(strcat('vel: ', int2str(vels'), 'km/h'));
                 predictedTrackInds = ...
                     [reliableTracks(:).consecutiveInvisibleCount] > 0;
                 isPredicted = cell(size(labels));
@@ -372,6 +397,10 @@ function [ output_args ] = multipleTrack( model )
                 frame = insertObjectAnnotation(frame, 'rectangle', ...
                     bboxes, labels);
                 
+                for j=1:size(reliableTracks,2)
+                    frame = insertMarker(frame,reliableTracks(j).kalmanFilter.State([true false true false])');
+                end
+                
                 % Draw the objects on the mask.
                 mask = insertObjectAnnotation(mask, 'rectangle', ...
                     bboxes, labels);
@@ -380,11 +409,50 @@ function [ output_args ] = multipleTrack( model )
         
         % Display the mask and the frame.
         obj.maskPlayer.step(mask);
+        writeVideo(obj.maskWriter,mask);
         if length(size(frame)) == 2
             frame = repmat(frame,[1 1 3]);
         end
+        
+        frame = insertText(frame,[0 0],int2str(size(saved_tracks, 2)),'FontSize',18,'BoxColor',...
+            'green','BoxOpacity',0.4,'TextColor','white');
         obj.videoPlayer.step(frame);
+        writeVideo(obj.videoWriter,frame);
     end
 
 
+%% Process the final frame
+    function processFinal()
+        minVisibleCount = 8;
+        if ~isempty(tracks)
+              
+            % Noisy detections tend to result in short-lived tracks.
+            % Only display tracks that have been visible for more than 
+            % a minimum number of frames.
+            reliableTrackInds = ...
+                [tracks(:).totalVisibleCount] > minVisibleCount;
+            reliableTracks = tracks(reliableTrackInds);
+            
+            % Process remaining tracks
+            if ~isempty(reliableTracks)
+                ages = [tracks(:).age];
+                saveInds = (ages > 10);
+                saved_tracks = [saved_tracks, tracks(saveInds)];
+            end
+        end
+        frame = insertText(frame,[0 0],int2str(size(saved_tracks, 2)),'FontSize',18,'BoxColor',...
+            'green','BoxOpacity',0.4,'TextColor','white');
+        obj.videoPlayer.step(frame);
+        writeVideo(obj.videoWriter,frame);
+
+        disp(sprintf('Finished!'));
+        disp(sprintf('-----------'));
+        for i=1:size(saved_tracks,2)
+            disp(sprintf('%d - Velocity: %f', i, saved_tracks(i).mvel));
+        end
+        
+        close(obj.videoWriter);
+        close(obj.maskWriter);
+    
+    end
 end
