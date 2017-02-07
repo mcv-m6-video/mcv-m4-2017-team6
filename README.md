@@ -25,7 +25,9 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 
 ### Object tracking and speed estimation
 
+[![Vehicle Tracking Highway](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=-3E01X6paSo)
 
+[![Vehicle Tracking UAB](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=8Q21Hjj9Gsk)
 
 ## Results
 
