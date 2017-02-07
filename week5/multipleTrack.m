@@ -18,7 +18,7 @@ function [ output_args ] = multipleTrack( model )
     for i = model.TRACK_SEQ(1) : model.TRACK_SEQ(2)
        oldTracks = tracks;
        frame = rgb2gray( imread(strcat(model.seq_path, 'in00', sprintf('%04d',i), '.jpg')) );
-       [segmentation, model] = foreground_detection(frame, model);   
+       [segmentation, model] = foreground_detection(frame, model);  
        
        % Begin object tracking
        [centroids, bboxes, mask] = detectObjects(segmentation);
