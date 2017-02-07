@@ -10,7 +10,7 @@ This first step aims to segment the moving objects in the image; this is done by
 We filtered the segmented image using morphological operators. By doing so we are able to remove the noise of the image as well as small artifacts. The experiments that we carried out to determine the best paramets of the segmenatation and morphology are shown in the *Project Slides* in the Resources section.
 
 
-(foto segmentation)
+<img src="images/comparison_morpho.png" alt="hi" class="inline"/>
 
 ### Video Compensation
 Video compensation plays an important role. Usually the cameras are placed in poles or signs and due to wind or other factors they suffer from vibrations. Having a jittery sequence makes the algorithms less robust; so it is important to process the video to generate a smooth sequence.
