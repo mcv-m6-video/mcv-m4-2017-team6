@@ -5,7 +5,7 @@ In this project we propose a video surveillance system which is able to count th
 In order to achive our goals we need to use different techniques such as back substraction, mathematical morphology, video compensation and object tracking.
 
 ### Background Substraction
-The background substraction is used to segment the cars. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarions.
+The background substraction is used to segment the moving objects. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarions. More details on the experiments that we carried out in order to determine the best value of alpha and rho are shown in the *Project Slides* in the Resources section.
 
 (foto segmentation)
 
@@ -32,13 +32,13 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 * [Dataset](http://www.changedetection.net/)
 
 ## Authors
-@gcucurull
+Guillem Cucurull [Github](https://github.com/gcucurull)
 
-@arbamas
+Arnau Baró [Github](https://github.com/arbamas)
 
-@vcampmany
+Pau Cebrian [Github](https://github.com/paucebr)
 
-@paucebr
+Victor Campmany [Github](https://github.com/vcampmany)
 
 
 <img src="images/uno.gif" alt="hi" class="inline"/>
