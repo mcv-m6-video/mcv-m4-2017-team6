@@ -86,6 +86,9 @@ function [ output_args ] = multipleTrack( model )
         open(obj.videoWriter);
         obj.maskWriter = VideoWriter(strcat(model.save_gif, '_mask.avi'));
         open(obj.maskWriter);
+        
+        obj.dualWriter = VideoWriter(strcat(model.save_gif, '_dual.avi'));
+        open(obj.dualWriter);
 
         % Create System objects for foreground detection and blob analysis
 
@@ -418,6 +421,8 @@ function [ output_args ] = multipleTrack( model )
             'green','BoxOpacity',0.4,'TextColor','white');
         obj.videoPlayer.step(frame);
         writeVideo(obj.videoWriter,frame);
+        writeVideo(obj.dualWriter,[frame, mask]);
+
     end
 
 
@@ -444,6 +449,7 @@ function [ output_args ] = multipleTrack( model )
             'green','BoxOpacity',0.4,'TextColor','white');
         obj.videoPlayer.step(frame);
         writeVideo(obj.videoWriter,frame);
+        writeVideo(obj.dualWriter,[frame, mask]);
 
         disp(sprintf('Finished!'));
         disp(sprintf('-----------'));
