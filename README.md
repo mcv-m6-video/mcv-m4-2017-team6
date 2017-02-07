@@ -12,6 +12,8 @@ We filtered the segmented image using morphological operators. By doing so we ar
 
 <img src="images/comparison_morpho.png" alt="hi" class="inline"/>
 
+<img src="images/uabseg_comparison.png" alt="hi" class="inline"/>
+
 ### Video Compensation
 Video compensation plays an important role. Usually the cameras are placed in poles or signs and due to wind or other factors they suffer from vibrations. Having a jittery sequence makes the algorithms less robust; so it is important to process the video to generate a smooth sequence.
 
