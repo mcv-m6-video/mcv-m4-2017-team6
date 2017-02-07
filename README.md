@@ -12,12 +12,33 @@ The background substraction is used to segment the cars. We have used a single g
 ### Video Compensation
 Video compensation plays an important role. Usually the cameras are placed in poles or signs and due to wind or other factors they suffer from vibrations. Having a jittery sequence makes the algorithms less robust; so it is important to process the video to generate a smooth sequence.
 
-To compensate the video we use Optical Flow obtained with the block matching algorithm
+To compensate the video we use Optical Flow obtained with the block matching algorithm. The following sequence shows the difference of using video compensation and not using it. In  the two right images we can see the sequence and the sequence of the original video; and in the two left image we have the same sequences using video compensation. We can observe that the segmentation results are better.
 
+<img src="images/compare_compensation.gif" alt="hi" class="inline"/>
 
 ### Object tracking and speed estimation
+
+
 
 ## Results
 
 ## Resources
-Slides, link to code...., paper
+* [Project Slides](https://docs.google.com/presentation/d/1YJnj8e_IcnCdWf5vRDw2Jt1kaXgdwhmclmG2308rm10/edit#slide=id.g20d2e7dda2_0_134).
+
+* [Project Code](https://github.com/mcv-m4-video/mcv-m4-2017-team6)
+
+* [Project Paper(under construction)]()
+
+* [Dataset](http://www.changedetection.net/)
+
+## Authors
+@gcucurull
+
+@arbamas
+
+@vcampmany
+
+@paucebr
+
+
+<img src="images/uno.gif" alt="hi" class="inline"/>
