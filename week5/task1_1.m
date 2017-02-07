@@ -4,7 +4,7 @@ function [ output_args ] = task1_1( input_args )
 
     model = {};
     
-    run = 'HIGHWAY';
+    run = 'TRAFFIC';
     switch run
         case 'HIGHWAY'
             % HIGHWAY
@@ -15,6 +15,8 @@ function [ output_args ] = task1_1( input_args )
             model.pix_metr = 0.5;
             model.fps = 30.0;
             model.save_gif = 'gifs/highway';
+            model.alpha = 3.75;
+            model.rho = 0.1;
         case 'TRAFFIC'
             % TRAFFIC
             model.seq_path = '../dataset2014/dataset/cameraJitter/traffic/input/';
@@ -25,8 +27,8 @@ function [ output_args ] = task1_1( input_args )
 %             SEQ = [950, 1050];
 %             model.SEQ = [1, 1570];
 %             model.TRACK_SEQ = [1, 1570];
-            model.aux = [246 1; 342 1; 68 328; 499 328]; % NOT THE REAL ONE
-            model.pix_metr = 0.109649; % NOT THE REAL ONE
+            model.aux = [1 63; 176 1; 135 240; 320 93]; % NOT THE REAL ONE
+            model.pix_metr = 0.05; % NOT THE REAL ONE
             model.fps = 30.0; % NOT THE REAL ONE
             model.save_gif = 'gifs/traffic';
         case 'UAB'
