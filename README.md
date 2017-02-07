@@ -4,10 +4,17 @@ In this project we propose a video surveillance system which is able to count th
 ## Technology
 In order to achive our goals we need to use different techniques such as back substraction, mathematical morphology, video compensation and object tracking.
 
-### Background Substraction
-The background substraction is used to segment the cars. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarions.
+### Background Estimation and Foreground Segmentation
+This first step aims to segment the moving objects in the image; this is done by creating a statistical model of the background. We have used a single gaussian adaptative approach in order to model the background. The method has two parameters: alpha, which controls the tolerance of the system, and rho, which provides memory to the model for variable background scenarios. 
 
-(foto segmentation)
+We filtered the segmented image using morphological operators. By doing so we are able to remove the noise of the image as well as small artifacts. The experiments that we carried out to determine the best paramets of the segmenatation and morphology are shown in the *Project Slides* in the Resources section.
+
+In the following figures we have a comparison doing segmentation with and without morphology. The results show two diferent frames from two of the sequences that we worked with. 
+
+
+<img src="images/comparison_morpho.png" alt="hi" class="inline"/>
+
+<img src="images/uabseg_comparison.png" alt="hi" class="inline"/>
 
 ### Video Compensation
 Video compensation plays an important role. Usually the cameras are placed in poles or signs and due to wind or other factors they suffer from vibrations. Having a jittery sequence makes the algorithms less robust; so it is important to process the video to generate a smooth sequence.
@@ -22,6 +29,7 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 
 ## Results
 
+
 ## Resources
 * [Project Slides](https://docs.google.com/presentation/d/1YJnj8e_IcnCdWf5vRDw2Jt1kaXgdwhmclmG2308rm10/edit#slide=id.g20d2e7dda2_0_134).
 
@@ -32,13 +40,14 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 * [Dataset](http://www.changedetection.net/)
 
 ## Authors
-@gcucurull
+* Guillem Cucurull [Github](https://github.com/gcucurull)
 
-@arbamas
+* Arnau Baró [Github](https://github.com/arbamas)
 
-@vcampmany
+* Pau Cebrian [Github](https://github.com/paucebr)
 
-@paucebr
+* Victor Campmany [Github](https://github.com/vcampmany)
+
 
 
 <img src="images/uno.gif" alt="hi" class="inline"/>
