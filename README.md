@@ -12,6 +12,8 @@ The background substraction is used to segment the cars. We have used a single g
 [Background Substraction Slides](https://drive.google.com/open?id=1dnUurtSCDUBepMk8pSRPdSBtiIqZMii968DKXVGQXg0).
 
 
+
+
 (foto segmentation)
 
 ### Video Compensation
@@ -26,6 +28,7 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 ### Object tracking and speed estimation
 
 [Object tracking and speed estimation Slides](https://drive.google.com/open?id=1qVJnOOqmPPlsL1DYmORwB7VqqbGexh3oYGV6hWjTOxc).
+
 [Object tracking demo](https://www.youtube.com/watch?v=OgIRAjnnJzI)
 
 ## Results
