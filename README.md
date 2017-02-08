@@ -33,9 +33,9 @@ To count the vehicles we keep an historic of all the blobs tracked along with th
 
 [![Vehicle Tracking Highway](https://img.youtube.com/vi/-3E01X6paSo/0.jpg)](https://www.youtube.com/watch?v=-3E01X6paSo)
 
-[![Vehicle Tracking Traffic](https://www.youtube.com/watch?v=fXpIVU2_rl0)](https://www.youtube.com/watch?v=fXpIVU2_rl0)
+[![Vehicle Tracking Traffic](https://img.youtube.com/vi/fXpIVU2_rl0/0.jpg)](https://www.youtube.com/watch?v=fXpIVU2_rl0)
 
-[![Vehicle Tracking UAB](https://www.youtube.com/watch?v=8Q21Hjj9Gsk)](https://www.youtube.com/watch?v=8Q21Hjj9Gsk)
+[![Vehicle Tracking UAB](https://img.youtube.com/vi/8Q21Hjj9Gsk/0.jpg)](https://www.youtube.com/watch?v=8Q21Hjj9Gsk)
 
 ## Results
 
