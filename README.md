@@ -31,14 +31,17 @@ We perform the object tracking on the segmented frames. We use a connected compo
 In order to perform speed estimation in any road, the only requirements are that we must first measure the road to monitorize to calibrate the speed estimator and we must know the FPS of the camera. Additionally, we can track a car whith known velocity to further calibrate the speed estimator.
 To count the vehicles we keep an historic of all the blobs tracked along with their speed.
 
-[![Vehicle Tracking Highway](https://img.youtube.com/vi/-3E01X6paSo/0.jpg)](https://www.youtube.com/watch?v=-3E01X6paSo)
 *Vehicle tracking Highway sequence video (Youtube)*
 
-[![Vehicle Tracking Traffic](https://img.youtube.com/vi/fXpIVU2_rl0/0.jpg)](https://www.youtube.com/watch?v=fXpIVU2_rl0)
+[![Vehicle Tracking Highway](https://img.youtube.com/vi/-3E01X6paSo/0.jpg)](https://www.youtube.com/watch?v=-3E01X6paSo)
+
 *Vehicle tracking Traffic sequence video (Youtube)*
 
-[![Vehicle Tracking UAB](https://img.youtube.com/vi/8Q21Hjj9Gsk/0.jpg)](https://www.youtube.com/watch?v=8Q21Hjj9Gsk)
+[![Vehicle Tracking Traffic](https://img.youtube.com/vi/fXpIVU2_rl0/0.jpg)](https://www.youtube.com/watch?v=fXpIVU2_rl0)
+
 *Vehicle tracking UAB sequence video (Youtube)*
+
+[![Vehicle Tracking UAB](https://img.youtube.com/vi/8Q21Hjj9Gsk/0.jpg)](https://www.youtube.com/watch?v=8Q21Hjj9Gsk)
 
 ## Results
 
