@@ -43,8 +43,6 @@ To count the vehicles we keep an historic of all the blobs tracked along with th
 
 [![Vehicle Tracking UAB](https://img.youtube.com/vi/8Q21Hjj9Gsk/0.jpg)](https://www.youtube.com/watch?v=8Q21Hjj9Gsk)
 
-## Results
-
 
 ## Resources
 * [Project Slides](https://docs.google.com/presentation/d/1YJnj8e_IcnCdWf5vRDw2Jt1kaXgdwhmclmG2308rm10/edit#slide=id.g20d2e7dda2_0_134).
