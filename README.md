@@ -32,10 +32,13 @@ In order to perform speed estimation in any road, the only requirements are that
 To count the vehicles we keep an historic of all the blobs tracked along with their speed.
 
 [![Vehicle Tracking Highway](https://img.youtube.com/vi/-3E01X6paSo/0.jpg)](https://www.youtube.com/watch?v=-3E01X6paSo)
+*Vehicle tracking Highway sequence video (Youtube)*
 
 [![Vehicle Tracking Traffic](https://img.youtube.com/vi/fXpIVU2_rl0/0.jpg)](https://www.youtube.com/watch?v=fXpIVU2_rl0)
+*Vehicle tracking Traffic sequence video (Youtube)*
 
 [![Vehicle Tracking UAB](https://img.youtube.com/vi/8Q21Hjj9Gsk/0.jpg)](https://www.youtube.com/watch?v=8Q21Hjj9Gsk)
+*Vehicle tracking UAB sequence video (Youtube)*
 
 ## Results
 
