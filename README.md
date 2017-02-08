@@ -25,6 +25,10 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 
 ### Object tracking and speed estimation
 
+We perform the object tracking on the segmented frames. We use a connected components analysis on the segmented frames to detect blobs and we track them using Kalman Filters. Then, once we have identified the different blobs that appear in the image and they are being tracked across consecutive frames, the speed estimation process is performed. To estimate the speed of a vehicle we compute the displacement in pixels of the detection with respect to the previous position. The displacement is computed by projecting the current and previous positions to a plane where the pixel distance is equivalent in the whole image. Then, the velocity can be estimated by knowing the FPS (Frames Per Second) of the video and the distance in meters equivalent to the distance in pixels.
+In order to perform speed estimation in any road, the only requirements are that we must first measure the road to monitorize to calibrate the speed estimator and we must know the FPS of the camera. Additionally, we can track a car whith known velocity to further calibrate the speed estimator.
+To count the vehicles we keep an historic of all the blobs tracked along with their speed.
+
 [![Vehicle Tracking Highway](https://www.youtube.com/watch?v=-3E01X6paSo)](https://www.youtube.com/watch?v=-3E01X6paSo)
 
 [![Vehicle Tracking Traffic](https://www.youtube.com/watch?v=fXpIVU2_rl0)](https://www.youtube.com/watch?v=fXpIVU2_rl0)
@@ -51,7 +55,3 @@ To compensate the video we use Optical Flow obtained with the block matching alg
 * Pau Cebrian [Github](https://github.com/paucebr)
 
 * Victor Campmany [Github](https://github.com/vcampmany)
-
-
-
-<img src="images/uno.gif" alt="hi" class="inline"/>
