@@ -45,7 +45,7 @@ To count the vehicles we keep an historic of all the blobs tracked along with th
 
 
 ## Resources
-* [Project Slides](https://docs.google.com/presentation/d/1YJnj8e_IcnCdWf5vRDw2Jt1kaXgdwhmclmG2308rm10/edit?usp=sharing).
+* [Project Slides](https://github.com/mcv-m4-video/mcv-m4-2017-team6).
 
 * [Project Code](https://github.com/mcv-m4-video/mcv-m4-2017-team6)
 
