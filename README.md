@@ -49,7 +49,7 @@ To count the vehicles we keep an historic of all the blobs tracked along with th
 
 * [Project Code](https://github.com/mcv-m4-video/mcv-m4-2017-team6)
 
-* [Project Paper(under construction)]()
+* [Project Paper](https://github.com/mcv-m4-video/mcv-m4-2017-team6/blob/master/docs/video-surveillance-road.pdf)
 
 * [Dataset](http://www.changedetection.net/)
 
